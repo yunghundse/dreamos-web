@@ -28,6 +28,11 @@
     background:rgba(8,10,20,.6); backdrop-filter:blur(24px) saturate(180%); border-bottom:1px solid rgba(255,255,255,.07);
     font-size:13px; color:var(--dim); }
   nav b { color:#fff; font-size:15px; letter-spacing:-.3px; }
+  .nav-brand { display:inline-flex; align-items:center; gap:9px; }
+  .nav-orb { width:24px; height:24px; flex:none; background:url('img/hero-orb.png') center/135% no-repeat;
+    -webkit-mask:radial-gradient(circle,#000 44%,transparent 56%); mask:radial-gradient(circle,#000 44%,transparent 56%);
+    animation:navOrbSpin 20s linear infinite; }
+  @keyframes navOrbSpin { to { transform:rotate(360deg); } }
   nav a { color:var(--dim); text-decoration:none; } nav a:hover { color:#fff; }
   nav .cta { margin-left:auto; background:linear-gradient(135deg,var(--acc2),var(--acc)); color:#05060c; border-radius:980px; padding:8px 18px; font-weight:700; }
   .hero { text-align:center; padding:150px 6vw 100px; position:relative; }
@@ -99,7 +104,7 @@
 </style>
 </head>
 <body>
-<nav><b>🌌 Dream OS</b><a href="#feat">Funktionen</a><a href="#privacy">Privatsphäre</a><a href="#preis">Preis</a><a href="#warteliste">Warteliste</a><a class="cta" href="#download">Kostenlos laden</a></nav>
+<nav><b class="nav-brand"><span class="nav-orb"></span>Dream OS</b><a href="#feat">Funktionen</a><a href="#privacy">Privatsphäre</a><a href="#preis">Preis</a><a href="#warteliste">Warteliste</a><a class="cta" href="#download">Kostenlos laden</a></nav>
 
 <div class="hero">
   <div class="orb"></div>
