@@ -4,16 +4,22 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dream OS — Dein persönliches KI-Betriebssystem</title>
 <style>
-  :root { --ink:#1d1d1f; --dim:#6e6e73; --acc:#7c5cff; --acc2:#38b6ff; }
+  :root { --ink:#f4f6fc; --dim:#9aa4c8; --acc:#8b7cf8; --acc2:#5eeaff; --bg:#06070f; }
   * { box-sizing:border-box; margin:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
-    color:var(--ink); background:#fbfbfd; -webkit-font-smoothing:antialiased; line-height:1.5; }
+    color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased; line-height:1.5; position:relative; overflow-x:hidden; }
+  /* Aurora wie in der App — Glas braucht Farbe dahinter */
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(1100px 700px at 82% -10%, rgba(139,124,248,.22), transparent 55%),
+               radial-gradient(900px 650px at -8% 15%, rgba(94,234,255,.14), transparent 55%),
+               radial-gradient(900px 700px at 50% 115%, rgba(255,110,180,.08), transparent 60%); }
+  body > * { position:relative; z-index:1; }
   nav { position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:28px; padding:14px 6vw;
-    background:rgba(251,251,253,.72); backdrop-filter:blur(20px) saturate(180%); border-bottom:1px solid rgba(0,0,0,.06);
+    background:rgba(8,10,20,.6); backdrop-filter:blur(24px) saturate(180%); border-bottom:1px solid rgba(255,255,255,.07);
     font-size:13px; color:var(--dim); }
-  nav b { color:var(--ink); font-size:15px; letter-spacing:-.3px; }
-  nav a { color:var(--dim); text-decoration:none; } nav a:hover { color:var(--ink); }
-  nav .cta { margin-left:auto; background:var(--ink); color:#fff; border-radius:980px; padding:7px 16px; font-weight:600; }
+  nav b { color:#fff; font-size:15px; letter-spacing:-.3px; }
+  nav a { color:var(--dim); text-decoration:none; } nav a:hover { color:#fff; }
+  nav .cta { margin-left:auto; background:linear-gradient(135deg,var(--acc2),var(--acc)); color:#05060c; border-radius:980px; padding:8px 18px; font-weight:700; }
   .hero { text-align:center; padding:90px 6vw 60px; position:relative; overflow:hidden; }
   .hero::before { content:""; position:absolute; top:-200px; left:50%; transform:translateX(-50%);
     width:900px; height:600px; border-radius:50%; filter:blur(90px); opacity:.5; z-index:0;
@@ -37,38 +43,34 @@
   section h2 { font-size:clamp(30px,4.5vw,48px); font-weight:750; letter-spacing:-1.2px; text-align:center; }
   section .sub { text-align:center; color:var(--dim); font-size:18px; max-width:620px; margin:14px auto 46px; }
   .feats { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }
-  .feat { background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:24px; padding:28px;
-    box-shadow:0 10px 30px rgba(0,0,0,.05); }
-  .feat .ic { font-size:30px; } .feat h3 { font-size:19px; margin:12px 0 6px; letter-spacing:-.3px; }
+  .feat { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:24px; padding:28px;
+    backdrop-filter:blur(20px); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
+  .feat .ic { font-size:30px; } .feat h3 { font-size:19px; margin:12px 0 6px; letter-spacing:-.3px; color:#fff; }
   .feat p { color:var(--dim); font-size:14.5px; }
-  .privacy { background:var(--ink); color:#f5f5f7; border-radius:32px; text-align:center; padding:70px 8vw; }
-  .privacy h2 { color:#fff; } .privacy p { color:#a1a1a6; font-size:18px; max-width:640px; margin:16px auto 0; }
+  .privacy { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#f5f5f7; border-radius:32px; text-align:center; padding:70px 8vw; backdrop-filter:blur(20px); }
+  .privacy h2 { color:#fff; } .privacy p { color:var(--dim); font-size:18px; max-width:640px; margin:16px auto 0; }
   .privacy .locks { display:flex; gap:26px; justify-content:center; margin-top:36px; flex-wrap:wrap; font-size:14px; color:#d2d2d7; }
   .price { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; max-width:760px; margin:0 auto; }
-  .plan { background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:26px; padding:34px; text-align:center; }
-  .plan.hot { border:2px solid var(--acc); box-shadow:0 20px 50px rgba(124,92,255,.18); }
+  .plan { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:26px; padding:34px; text-align:center; backdrop-filter:blur(20px); }
+  .plan.hot { border:2px solid var(--acc); box-shadow:0 20px 50px rgba(139,124,248,.25); }
   .plan .p { font-size:42px; font-weight:750; letter-spacing:-1px; margin:10px 0; }
   .plan .p small { font-size:15px; color:var(--dim); font-weight:450; }
   .plan ul { list-style:none; padding:0; margin:18px 0 26px; color:var(--dim); font-size:14px; line-height:2; }
   #dl-card input[type=email], #dl-card input[type=password] { width:100%; padding:13px 16px; margin-bottom:10px;
     border-radius:14px; border:1.5px solid rgba(0,0,0,.12); font-size:15px; outline:none; box-sizing:border-box; background:transparent; color:var(--ink); }
   #dl-card input:focus { border-color:var(--acc); }
-  #dl-card code { background:rgba(124,92,255,.1); padding:2px 6px; border-radius:6px; font-size:12px; }
-  @media (prefers-color-scheme: dark) { #dl-card { background:rgba(255,255,255,.05)!important; border-color:rgba(255,255,255,.1)!important; }
-    #dl-card input { border-color:rgba(255,255,255,.15); } }
-  footer { padding:40px 6vw; color:var(--dim); font-size:12px; text-align:center; border-top:1px solid rgba(0,0,0,.06); }
+  #dl-card { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.1)!important; backdrop-filter:blur(24px); }
+  #dl-card input { border-color:rgba(255,255,255,.15); color:var(--ink); }
+  #dl-card code { background:rgba(139,124,248,.18); color:#cdbcff; padding:2px 6px; border-radius:6px; font-size:12px; }
+  .btn.ghost { color:#f5f5f7; border-color:rgba(255,255,255,.3); }
+  footer { padding:40px 6vw; color:var(--dim); font-size:12px; text-align:center; border-top:1px solid rgba(255,255,255,.08); }
   footer a { color:var(--dim); }
-  /* 🌙 Dunkles Design (folgt dem System) */
-  @media (prefers-color-scheme: dark) {
-    body { background:#05060c; color:#f5f5f7; } :root { --ink:#f5f5f7; --dim:#98989d; }
-    nav { background:rgba(8,10,20,.72); border-bottom-color:rgba(255,255,255,.08); }
-    nav b, nav .cta { color:#fff; } nav .cta { background:#fff; color:#05060c; }
-    .feat, .plan { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.1); box-shadow:none; }
-    .privacy { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); }
-    .btn.ghost { color:#f5f5f7; border-color:rgba(255,255,255,.3); }
-    footer { border-top-color:rgba(255,255,255,.08); }
-    .hero::before { opacity:.35; }
-  }
+  /* „App beschädigt"-Box — der eine wichtige Handgriff nach dem Download */
+  .fixbox { max-width:620px; margin:26px auto 0; background:rgba(255,196,102,.08); border:1px solid rgba(255,196,102,.3);
+    border-radius:18px; padding:18px 22px; text-align:left; }
+  .fixbox b { color:#ffd28a; } .fixbox p { color:var(--dim); font-size:13.5px; margin-top:6px; line-height:1.7; }
+  .fixbox code { display:inline-block; background:#0a0c16; border:1px solid rgba(255,255,255,.12); color:#9ff; padding:6px 12px;
+    border-radius:8px; font-size:12.5px; margin-top:8px; user-select:all; }
 </style>
 </head>
 <body>
@@ -78,25 +80,8 @@
   <h1>Dein Leben.<br><span>Dein eigenes KI-Betriebssystem.</span></h1>
   <p>Ein Assistent, der dich wirklich kennt. Ein Zuhause für deine Termine, Nachrichten, Gesundheit und Ideen. Und alles bleibt da, wo es hingehört: <b>auf deinem Gerät.</b></p>
   <a class="btn" href="#download">Kostenlos laden</a><a class="btn ghost" href="#warteliste">Auf die Warteliste</a>
-  <div class="shot" style="padding:0;overflow:hidden;max-width:960px;margin:0 auto">
-    <img src="img/dreamos-cockpit.png" alt="Dream OS Cockpit" style="width:100%;display:block" loading="eager">
-  </div>
+  <p style="font-size:14px;margin-top:24px;color:var(--dim)">Läuft komplett auf deinem Rechner · Mac &amp; Windows · Beta</p>
 </div>
-
-<section style="padding:30px 6vw 10px">
-  <h2 style="text-align:center">Echtes System. Echte Screenshots.</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;max-width:1100px;margin:26px auto 0">
-    <figure style="margin:0;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.35)">
-      <img src="img/dreamos-postfach.png" alt="Postfach mit GO-Prinzip" style="width:100%;display:block">
-      <figcaption style="padding:10px 14px;font-size:13px;color:#9aa4c8">Postfach — dein Sekretär arbeitet vor, du gibst GO</figcaption></figure>
-    <figure style="margin:0;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.35)">
-      <img src="img/dreamos-brain.png" alt="Second Brain Graph" style="width:100%;display:block">
-      <figcaption style="padding:10px 14px;font-size:13px;color:#9aa4c8">Second Brain — deine Notizen als lebendes Netz, mit Zeitreise</figcaption></figure>
-    <figure style="margin:0;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.35)">
-      <img src="img/dreamos-agenten.png" alt="Agenten und Autopilot" style="width:100%;display:block">
-      <figcaption style="padding:10px 14px;font-size:13px;color:#9aa4c8">Agenten — Autopilot, Live-Fortschritt, Skill-Bibliothek der Community</figcaption></figure>
-  </div>
-</section>
 
 <section id="feat">
   <h2>Wie Jarvis. Nur echt. Und deins.</h2>
@@ -120,7 +105,7 @@
 <section id="download" style="text-align:center">
   <h2>Hol dir die Free-Version.</h2>
   <p class="sub">Kostenlos, für immer. Kurz ein Konto anlegen, E-Mail bestätigen — dann lädt dein persönlicher Download. Dein Konto gibt dir eine eigene ID für Dream-Net &amp; Sync.</p>
-  <div id="dl-card" style="max-width:440px;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:26px;padding:34px;box-shadow:0 20px 50px rgba(124,92,255,.12);text-align:left">
+  <div id="dl-card" style="max-width:440px;margin:0 auto;border-radius:26px;padding:34px;box-shadow:0 20px 50px rgba(139,124,248,.2);text-align:left">
 
     <!-- Schritt 1: Registrieren -->
     <div id="dl-signup">
@@ -157,8 +142,16 @@
       <div style="font-size:40px">🎉</div>
       <h3 style="margin:10px 0 6px">Dein Download läuft</h3>
       <p style="color:var(--dim);font-size:14px">Startet nicht automatisch? <a href="#" id="dl-again" style="font-weight:600">Hier klicken</a>.</p>
-      <p style="color:var(--dim);font-size:12.5px;margin-top:12px">Entpacken → Ordner <b>app</b> → <code>npm install &amp;&amp; npm start</code>. Anleitung liegt in der Zip (INSTALLIEREN.md).</p>
+      <p style="color:var(--dim);font-size:12.5px;margin-top:12px">Zip entpacken → <b>Dream OS.app</b>.</p>
     </div>
+  </div>
+  <div class="fixbox">
+    <b>⚠️ macOS sagt „Dream OS ist beschädigt"? Das ist normal in der Beta.</b>
+    <p>Weil wir (noch) kein 99-€-Apple-Zertifikat haben, blockt macOS unbekannte Apps. <b>Kein echter Schaden.</b> So startest du sie:<br>
+    <b>1.</b> Terminal öffnen (Cmd+Leertaste → „Terminal") · <b>2.</b> diese Zeile einfügen &amp; Enter (zieht die Blockade weg):</p>
+    <code>xattr -cr ~/Downloads/Dream\ OS.app</code>
+    <p style="margin-top:8px"><b>3.</b> Dann Rechtsklick auf die App → <b>Öffnen</b> → nochmal <b>Öffnen</b>. Ab jetzt startet sie normal per Doppelklick.<br>
+    <span style="color:#8fa">Windows-Nutzer:</span> „Windows hat den PC geschützt" → <b>Weitere Informationen</b> → <b>Trotzdem ausführen</b>.</p>
 
     <p id="dl-status" style="font-size:13px;color:var(--dim);margin:14px 0 0;text-align:center;min-height:18px"></p>
   </div>
