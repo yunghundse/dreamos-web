@@ -34,7 +34,10 @@
   /* Der Orb — EIN leuchtendes Element, schwebt sanft, hinter dem Titel */
   .orb { width:min(460px,74vw); aspect-ratio:1; margin:0 auto -90px; position:relative; z-index:0;
     background:url('img/hero-orb.png') center/contain no-repeat;
-    mix-blend-mode:screen; /* schwarzes PNG verschwindet — nur der Glow schwebt, nahtlos */
+    mix-blend-mode:screen;
+    /* radiale Maske schneidet den schwarzen Kasten kreisförmig weg — nur der Orb bleibt */
+    -webkit-mask-image:radial-gradient(circle at center, #000 46%, transparent 62%);
+    mask-image:radial-gradient(circle at center, #000 46%, transparent 62%);
     animation:float 8s ease-in-out infinite, orbIn 1.6s cubic-bezier(.16,1,.3,1);
     transform:translateY(var(--py,0)); will-change:transform; }
   @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-16px) scale(1.03)} }
