@@ -73,15 +73,26 @@
       <div><div id="uhr">--:--</div><div id="gruss" class="dim" style="font-size:14px;margin-top:6px">…</div></div>
       <button class="chip" id="b-logout">Abmelden</button>
     </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px">
+      <div class="card" style="margin:0;padding:12px;text-align:center"><b id="w-offen" style="font-size:26px;font-weight:750">–</b><div class="dim" style="font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;margin-top:3px">Postfach</div></div>
+      <div class="card" style="margin:0;padding:12px;text-align:center"><b id="w-go" style="font-size:26px;font-weight:750;color:var(--ok)">–</b><div class="dim" style="font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;margin-top:3px">GO heute</div></div>
+      <div class="card" style="margin:0;padding:12px;text-align:center"><b style="font-size:26px;font-weight:750;color:var(--cyan)">✓</b><div class="dim" style="font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;margin-top:3px">Konto</div></div>
+      <div class="card" style="margin:0;padding:12px;text-align:center"><b style="font-size:15px;font-weight:750;line-height:26px">FREE</b><div class="dim" style="font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;margin-top:3px">Plan</div></div>
+    </div>
     <div class="card" id="erste" style="display:none;border-left:3px solid var(--cyan)">
       <h2>Willkommen — so funktioniert's</h2>
-      <p style="font-size:13.5px;line-height:1.8">Das hier ist dein <b>Postfach</b>: Dein KI-Sekretär (auf dem Rechner oder im Dream-OS-Plugin) arbeitet Aufgaben <b>fertig aus</b> und legt sie dir hier hin. Du liest — und tippst nur noch <b>GO</b>.<br><span class="dim" style="font-size:12px">Zum Testen liegen unten zwei Beispiel-Pakete. iPhone-Tipp: Teilen → „Zum Home-Bildschirm" = echte App.</span></p>
+      <p style="font-size:13.5px;line-height:1.8">Das hier ist dein <b>Postfach</b>: Dein KI-Sekretär arbeitet Aufgaben <b>fertig aus</b> und legt sie dir hier hin. Du liest — und tippst nur noch <b>GO</b>.<br><span class="dim" style="font-size:12px">Unten liegen zwei Beispiel-Pakete zum Ausprobieren. iPhone-Tipp: Teilen → „Zum Home-Bildschirm" = echte App.</span></p>
     </div>
     <div class="card">
       <h2>Postfach — fertig für dein GO</h2>
       <div id="pakete"><span class="dim" style="font-size:13px">lade …</span></div>
     </div>
-    <p class="dim" style="font-size:10.5px;text-align:center;margin-top:14px">Dream OS Web v1 · läuft zusammen mit deinem System, aber getrennt gespeichert — jeder sieht nur seine eigenen Daten (Row Level Security).</p>
+    <div class="card" style="border-left:3px solid var(--violet)">
+      <h2>Das volle System — Brain, Agenten, Radar, Francis</h2>
+      <p style="font-size:13px;line-height:1.75">Dream OS Web ist deine <b>Fernbedienung</b>. Das komplette Betriebssystem — Second Brain mit Wissens-Graph, eigene KI-Agenten, Sekretär der alle 2 Stunden für dich vorarbeitet, Radar, Sprachassistent — läuft <b>auf deinem eigenen Rechner</b> (Mac-App oder Dream-OS-Plugin). So bleiben deine Daten zu 100 % bei dir, und die KI kostet dich 0 €.</p>
+      <p class="dim" style="font-size:12px;line-height:1.7;margin-top:8px">So kommst du ran: <b>1.</b> Mac-App / Plugin installieren (Starter-Kit) → <b>2.</b> mit diesem Konto anmelden → <b>3.</b> dein Sekretär legt fertige Pakete hier ins Web-Postfach — du gibst von überall GO.<br>Noch kein Starter? Schreib an <b>info@butterbread-tech.com</b> — du bekommst den Test-Zugang.</p>
+    </div>
+    <p class="dim" style="font-size:10.5px;text-align:center;margin-top:14px">Dream OS Web v2 · läuft zusammen mit deinem System, aber getrennt gespeichert — jeder sieht nur seine eigenen Daten (Row Level Security).</p>
   </section>
 </main>
 <script>
@@ -134,19 +145,22 @@ async function ladePakete() {
   const r = await api('/rest/v1/pakete?status=neq.erledigt&order=created_at.desc&limit=20');
   if (r.status === 401) { localStorage.removeItem('dos_ses'); return location.reload(); }
   let p = r.j || [];
-  if (!p.length && !localStorage.getItem('dos_demo')) {
+  const demoKey = 'dos_demo_' + (SES?.user?.id || 'x');
+  if (!p.length && !localStorage.getItem(demoKey)) {
     // Erststart: zwei Beispiel-Pakete anlegen, damit man das Prinzip SIEHT (eigene Zeilen, RLS)
-    localStorage.setItem('dos_demo', '1');
-    await api('/rest/v1/pakete', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify([
+    const ins = await api('/rest/v1/pakete', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify([
       { user_id: SES.user.id, titel: 'Willkommen — so sieht ein fertiges Paket aus', wichtigkeit: 3,
         inhalt: 'Dein Sekretär hat hier z. B. eine fertige Antwort-Mail, eine Entscheidungsvorlage oder einen Tagesplan ausgearbeitet.\n\nDu liest kurz drüber und tippst GO — dein System wendet es an. Erledigt heißt: weg vom Tisch.' },
       { user_id: SES.user.id, titel: 'Beispiel: Entscheidungsvorlage Hosting', wichtigkeit: 4,
         inhalt: 'Option A: Cloudflare Pages — 0 €, schnell, EU.\nOption B: eigener Server — 5 €/Monat, mehr Pflege.\n\nEmpfehlung: Option A, Risiko gering.\n\n(Genau so legt dir die KI künftig echte Entscheidungen vor.)' }
     ]) });
+    if (ins.ok) localStorage.setItem(demoKey, '1');   // Flag NUR bei Erfolg — sonst nächster Versuch
     const r2 = await api('/rest/v1/pakete?status=neq.erledigt&order=created_at.desc&limit=20');
     p = r2.j || [];
   }
   $('#erste').style.display = p.length <= 2 ? 'block' : 'none';
+  $('#w-offen').textContent = p.filter(x => x.status === 'offen').length;
+  $('#w-go').textContent = p.filter(x => x.status === 'go').length;
   $('#pakete').innerHTML = p.map(x => `
     <div class="card paket" data-id="${esc(x.id)}">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
