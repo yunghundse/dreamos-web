@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dream OS — Dein persönliches KI-Betriebssystem</title>
+<style>
+  :root { --ink:#1d1d1f; --dim:#6e6e73; --acc:#7c5cff; --acc2:#38b6ff; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+    color:var(--ink); background:#fbfbfd; -webkit-font-smoothing:antialiased; line-height:1.5; }
+  nav { position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:28px; padding:14px 6vw;
+    background:rgba(251,251,253,.72); backdrop-filter:blur(20px) saturate(180%); border-bottom:1px solid rgba(0,0,0,.06);
+    font-size:13px; color:var(--dim); }
+  nav b { color:var(--ink); font-size:15px; letter-spacing:-.3px; }
+  nav a { color:var(--dim); text-decoration:none; } nav a:hover { color:var(--ink); }
+  nav .cta { margin-left:auto; background:var(--ink); color:#fff; border-radius:980px; padding:7px 16px; font-weight:600; }
+  .hero { text-align:center; padding:90px 6vw 60px; position:relative; overflow:hidden; }
+  .hero::before { content:""; position:absolute; top:-200px; left:50%; transform:translateX(-50%);
+    width:900px; height:600px; border-radius:50%; filter:blur(90px); opacity:.5; z-index:0;
+    background:radial-gradient(circle at 30% 40%, var(--acc2), transparent 60%),
+               radial-gradient(circle at 70% 60%, var(--acc), transparent 60%); }
+  .hero > * { position:relative; z-index:1; }
+  .hero h1 { font-size:clamp(42px,7vw,80px); font-weight:750; letter-spacing:-2.5px; line-height:1.05; }
+  .hero h1 span { background:linear-gradient(90deg,var(--acc),var(--acc2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p { font-size:clamp(17px,2.2vw,23px); color:var(--dim); max-width:640px; margin:22px auto 34px; font-weight:450; }
+  .btn { display:inline-block; background:linear-gradient(135deg,var(--acc),var(--acc2)); color:#fff; text-decoration:none;
+    border-radius:980px; padding:15px 34px; font-size:16px; font-weight:700; box-shadow:0 12px 34px rgba(124,92,255,.35); }
+  .btn.ghost { background:none; color:var(--ink); border:1.5px solid rgba(0,0,0,.18); box-shadow:none; margin-left:12px; }
+  .shot { margin:60px auto 0; max-width:960px; border-radius:26px; padding:22px;
+    background:linear-gradient(160deg,#0b0e1d,#151a33); box-shadow:0 40px 100px rgba(20,20,60,.35); text-align:left; color:#dfe6f5; }
+  .shot .bar { display:flex; gap:6px; margin-bottom:16px; } .shot .bar i { width:10px; height:10px; border-radius:50%; background:#3a3f5c; display:block; }
+  .shot .big { font-size:44px; font-weight:200; background:linear-gradient(180deg,#fff,#a08cff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .shot .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; }
+  .shot .tile { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:12px; font-size:12px; }
+  .shot .tile b { display:block; font-size:22px; margin:4px 0; }
+  section { padding:80px 6vw; max-width:1080px; margin:0 auto; }
+  section h2 { font-size:clamp(30px,4.5vw,48px); font-weight:750; letter-spacing:-1.2px; text-align:center; }
+  section .sub { text-align:center; color:var(--dim); font-size:18px; max-width:620px; margin:14px auto 46px; }
+  .feats { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }
+  .feat { background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:24px; padding:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05); }
+  .feat .ic { font-size:30px; } .feat h3 { font-size:19px; margin:12px 0 6px; letter-spacing:-.3px; }
+  .feat p { color:var(--dim); font-size:14.5px; }
+  .privacy { background:var(--ink); color:#f5f5f7; border-radius:32px; text-align:center; padding:70px 8vw; }
+  .privacy h2 { color:#fff; } .privacy p { color:#a1a1a6; font-size:18px; max-width:640px; margin:16px auto 0; }
+  .privacy .locks { display:flex; gap:26px; justify-content:center; margin-top:36px; flex-wrap:wrap; font-size:14px; color:#d2d2d7; }
+  .price { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; max-width:760px; margin:0 auto; }
+  .plan { background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:26px; padding:34px; text-align:center; }
+  .plan.hot { border:2px solid var(--acc); box-shadow:0 20px 50px rgba(124,92,255,.18); }
+  .plan .p { font-size:42px; font-weight:750; letter-spacing:-1px; margin:10px 0; }
+  .plan .p small { font-size:15px; color:var(--dim); font-weight:450; }
+  .plan ul { list-style:none; padding:0; margin:18px 0 26px; color:var(--dim); font-size:14px; line-height:2; }
+  #dl-card input[type=email], #dl-card input[type=password] { width:100%; padding:13px 16px; margin-bottom:10px;
+    border-radius:14px; border:1.5px solid rgba(0,0,0,.12); font-size:15px; outline:none; box-sizing:border-box; background:transparent; color:var(--ink); }
+  #dl-card input:focus { border-color:var(--acc); }
+  #dl-card code { background:rgba(124,92,255,.1); padding:2px 6px; border-radius:6px; font-size:12px; }
+  @media (prefers-color-scheme: dark) { #dl-card { background:rgba(255,255,255,.05)!important; border-color:rgba(255,255,255,.1)!important; }
+    #dl-card input { border-color:rgba(255,255,255,.15); } }
+  footer { padding:40px 6vw; color:var(--dim); font-size:12px; text-align:center; border-top:1px solid rgba(0,0,0,.06); }
+  footer a { color:var(--dim); }
+  /* 🌙 Dunkles Design (folgt dem System) */
+  @media (prefers-color-scheme: dark) {
+    body { background:#05060c; color:#f5f5f7; } :root { --ink:#f5f5f7; --dim:#98989d; }
+    nav { background:rgba(8,10,20,.72); border-bottom-color:rgba(255,255,255,.08); }
+    nav b, nav .cta { color:#fff; } nav .cta { background:#fff; color:#05060c; }
+    .feat, .plan { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.1); box-shadow:none; }
+    .privacy { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); }
+    .btn.ghost { color:#f5f5f7; border-color:rgba(255,255,255,.3); }
+    footer { border-top-color:rgba(255,255,255,.08); }
+    .hero::before { opacity:.35; }
+  }
+</style>
+</head>
+<body>
+<nav><b>🌌 Dream OS</b><a href="#feat">Funktionen</a><a href="#privacy">Privatsphäre</a><a href="#preis">Preis</a><a href="#warteliste">Warteliste</a><a class="cta" href="#download">Kostenlos laden</a></nav>
+
+<div class="hero">
+  <h1>Dein Leben.<br><span>Dein eigenes KI-Betriebssystem.</span></h1>
+  <p>Ein Assistent, der dich wirklich kennt. Ein Zuhause für deine Termine, Nachrichten, Gesundheit und Ideen. Und alles bleibt da, wo es hingehört: <b>auf deinem Gerät.</b></p>
+  <a class="btn" href="#download">Kostenlos laden</a><a class="btn ghost" href="#warteliste">Auf die Warteliste</a>
+  <div class="shot">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="big">09:41</div>
+    <div style="color:#9aa4c8">Guten Morgen. 🎯 Fokus: Pitch fertigstellen (45 Min)</div>
+    <div class="grid">
+      <div class="tile">📬<b>2</b>Postfach</div>
+      <div class="tile">📅<b>3</b>Termine heute</div>
+      <div class="tile">❤️<b>8.412</b>Schritte</div>
+      <div class="tile">📍<b>Köln</b>Standort-Karte</div>
+    </div>
+  </div>
+</div>
+
+<section id="feat">
+  <h2>Wie Jarvis. Nur echt. Und deins.</h2>
+  <p class="sub">Kein Chatbot-Tab im Browser — ein komplettes Betriebssystem-Erlebnis mit Login, Dock und einem Assistenten mit Stimme, Gedächtnis und Taten.</p>
+  <div class="feats">
+    <div class="feat"><div class="ic">🎙</div><h3>Sprich mit deinem Assistenten</h3><p>Leertaste halten, reden, loslassen. Er antwortet mit natürlicher Stimme, kennt deinen Tag — und handelt: Musik, Timer, Erinnerungen, Restaurantsuche an deinem Standort.</p></div>
+    <div class="feat"><div class="ic">🧠</div><h3>Ein Gedächtnis, das bleibt</h3><p>„Merke dir…" — für immer gespeichert. Dein Second Brain wächst als sichtbares Neuronen-Netz und lernt aus dem, was du tust. Transparent, nachlesbar, löschbar.</p></div>
+    <div class="feat"><div class="ic">🚀</div><h3>Agenten, die vorarbeiten</h3><p>Deine KI-Crew bereitet Aufgaben vor. Gebaut wird erst nach deinem GO — mit Live-Fortschritt. Du bleibst der Chef, immer.</p></div>
+    <div class="feat"><div class="ic">📬</div><h3>Ein Postfach für dein Leben</h3><p>Entscheidungen, Aufgaben, Nachrichten von Freunden und ihren KIs — als Karten zum Abarbeiten. Erledigt heißt erledigt.</p></div>
+    <div class="feat"><div class="ic">❤️</div><h3>Gesundheit im Blick</h3><p>Apple-Watch-Daten, Schritte, Schlaf, Mahlzeiten — mit ehrlichem Coaching statt Zahlenfriedhof. Diese Daten verlassen dein Gerät nie.</p></div>
+    <div class="feat"><div class="ic">🎨</div><h3>Ganz du</h3><p>Persona, Farben, Hell/Dunkel, zwei Sprachen, Einfacher Modus für Einsteiger — und ein Jarvis-Vollbildmodus zum Staunen.</p></div>
+  </div>
+</section>
+
+<section id="privacy"><div class="privacy">
+  <h2>Privatsphäre ist kein Feature.<br>Sie ist das Fundament.</h2>
+  <p>Die KI denkt lokal auf deinem Mac. Keine Cloud-Pflicht, keine Telemetrie, kein Konto-Zwang. Deine Notizen sind Klartext-Dateien in deinem Ordner — du kannst jederzeit alles lesen, sichern oder löschen.</p>
+  <div class="locks"><span>🔐 Touch ID-Sperre</span><span>🛡 Eingebauter Viren-Scan</span><span>📄 Offene Datenschutz-Doku</span><span>🇪🇺 DSGVO by Design</span></div>
+</div></section>
+
+<section id="download" style="text-align:center">
+  <h2>Hol dir die Free-Version.</h2>
+  <p class="sub">Kostenlos, für immer. Kurz ein Konto anlegen, E-Mail bestätigen — dann lädt dein persönlicher Download. Dein Konto gibt dir eine eigene ID für Dream-Net &amp; Sync.</p>
+  <div id="dl-card" style="max-width:440px;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:26px;padding:34px;box-shadow:0 20px 50px rgba(124,92,255,.12);text-align:left">
+
+    <!-- Schritt 1: Registrieren -->
+    <div id="dl-signup">
+      <div style="display:flex;align-items:center;gap:8px;font-weight:650;margin-bottom:4px">Kostenloses Konto</div>
+      <p style="color:var(--dim);font-size:13.5px;margin:0 0 16px">Schritt 1 von 2 — Registrieren</p>
+      <input type="email" id="su-email" placeholder="deine@email.de" autocomplete="email">
+      <input type="password" id="su-pass" placeholder="Passwort (min. 8 Zeichen)" autocomplete="new-password">
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--dim);margin:4px 0 14px">
+        <input type="checkbox" id="su-consent" style="margin-top:2px;width:auto"> Ich stimme der Datenverarbeitung laut <a href="https://butterbread-tech.com/impressum">Datenschutzerklärung</a> zu.</label>
+      <button class="btn" id="su-btn" style="width:100%;border:none;cursor:pointer">Konto anlegen &amp; laden</button>
+      <p style="font-size:12.5px;color:var(--dim);margin:14px 0 0;text-align:center">Schon ein Konto? <a href="#" id="to-login" style="font-weight:600">Einloggen</a></p>
+    </div>
+
+    <!-- Schritt 2a: E-Mail bestätigen -->
+    <div id="dl-confirm" style="display:none;text-align:center">
+      <div style="font-size:40px">📩</div>
+      <h3 style="margin:10px 0 6px">Bestätige deine E-Mail</h3>
+      <p style="color:var(--dim);font-size:14px">Wir haben dir einen Link an <b id="dl-confirm-mail"></b> geschickt. Klick ihn, komm zurück und logg dich ein — dann startet dein Download.</p>
+      <button class="btn ghost" id="to-login-2" style="margin:16px 0 0">Ich habe bestätigt → Einloggen</button>
+    </div>
+
+    <!-- Schritt 2b: Einloggen -->
+    <div id="dl-login" style="display:none">
+      <div style="font-weight:650;margin-bottom:4px">Einloggen &amp; laden</div>
+      <p style="color:var(--dim);font-size:13.5px;margin:0 0 16px">Schritt 2 von 2 — nach der E-Mail-Bestätigung</p>
+      <input type="email" id="li-email" placeholder="deine@email.de" autocomplete="email">
+      <input type="password" id="li-pass" placeholder="Passwort" autocomplete="current-password">
+      <button class="btn" id="li-btn" style="width:100%;border:none;cursor:pointer;margin-top:4px">Einloggen &amp; Download starten</button>
+      <p style="font-size:12.5px;color:var(--dim);margin:14px 0 0;text-align:center">Noch kein Konto? <a href="#" id="to-signup" style="font-weight:600">Registrieren</a></p>
+    </div>
+
+    <!-- Schritt 3: Fertig -->
+    <div id="dl-done" style="display:none;text-align:center">
+      <div style="font-size:40px">🎉</div>
+      <h3 style="margin:10px 0 6px">Dein Download läuft</h3>
+      <p style="color:var(--dim);font-size:14px">Startet nicht automatisch? <a href="#" id="dl-again" style="font-weight:600">Hier klicken</a>.</p>
+      <p style="color:var(--dim);font-size:12.5px;margin-top:12px">Entpacken → Ordner <b>app</b> → <code>npm install &amp;&amp; npm start</code>. Anleitung liegt in der Zip (INSTALLIEREN.md).</p>
+    </div>
+
+    <p id="dl-status" style="font-size:13px;color:var(--dim);margin:14px 0 0;text-align:center;min-height:18px"></p>
+  </div>
+  <p id="dl-os" style="font-size:13px;color:var(--dim);margin-top:16px"></p>
+  <p style="font-size:12px;color:var(--dim);margin-top:6px">Für die lokale KI einmal <a href="https://ollama.com">Ollama</a> installieren (gratis) → <code style="font-size:11px">ollama pull llama3.1:8b</code>. Läuft danach komplett offline auf deinem Rechner.</p>
+</section>
+
+<section id="preis">
+  <h2>Fair. Weil die KI dir gehört.</h2>
+  <p class="sub">Das Denken ist gratis — für immer. Bezahlt wird nur Komfort.</p>
+  <div class="price">
+    <div class="plan"><h3>Basis</h3><div class="p">0 €</div>
+      <ul><li>Assistent mit Stimme, lokal</li><li>Cockpit, Postfach, Kalender</li><li>Second Brain &amp; Gedächtnis</li><li>Alle Daten bei dir</li></ul>
+      <a class="btn" href="#download" style="margin:0">Kostenlos laden</a></div>
+    <div class="plan hot"><h3>Premium</h3><div class="p">19 €<small>/Monat</small></div>
+      <ul><li>Alles aus Basis</li><li>Gesundheits-Coaching+</li><li>Dream-Net: deine KI trifft Freunde</li><li>Foto-Aufräumer &amp; Premium-Skills</li><li>Community, Updates, Setup-Hilfe</li></ul>
+      <a class="btn" href="#warteliste" style="margin:0">Gründerplatz sichern</a></div>
+  </div>
+</section>
+
+<section id="warteliste" style="text-align:center">
+  <h2>Sei bei den Ersten.</h2>
+  <p class="sub">Dream OS startet in einer kleinen Gründer-Runde. Trag dich ein — die ersten 50 bekommen den Gründerpreis für immer.</p>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <input type="email" id="wl-email" placeholder="deine@email.de" style="padding:14px 22px;border-radius:980px;border:1.5px solid rgba(0,0,0,.15);font-size:15px;width:280px;outline:none">
+    <button class="btn" id="wl-btn" style="border:none;cursor:pointer">Auf die Warteliste</button>
+  </div>
+  <p id="wl-status" style="margin-top:14px;font-size:14px;color:var(--dim)"></p>
+  <script>
+    document.getElementById('wl-btn').onclick = async () => {
+      const email = document.getElementById('wl-email').value.trim();
+      const st = document.getElementById('wl-status');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { st.textContent = 'Bitte eine echte E-Mail-Adresse eingeben.'; return; }
+      st.textContent = 'trage ein…';
+      try {
+        const r = await fetch('https://moolblfuzesqncxpjxyf.supabase.co/rest/v1/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', apikey: 'sb_publishable_dzL1b3JVKqMntnkrTaGeqw_yhI8-uzD', Prefer: 'return=minimal' },
+          body: JSON.stringify({ email, quelle: 'landing' })
+        });
+        st.textContent = (r.ok || r.status === 409) ? '✓ Du stehst auf der Liste — wir melden uns zum Start!' : 'Hat nicht geklappt — schreib uns: info@butterbread-tech.com';
+      } catch (e) { st.textContent = 'Keine Verbindung — schreib uns: info@butterbread-tech.com'; }
+    };
+  </script>
+</section>
+
+<script>
+  // ── Free-Download: Konto (Supabase Auth) → E-Mail-Bestätigung → signierte URL ──
+  const SUPA = 'https://moolblfuzesqncxpjxyf.supabase.co';
+  const KEY = 'sb_publishable_dzL1b3JVKqMntnkrTaGeqw_yhI8-uzD';
+  // Betriebssystem erkennen → passende Installer-Datei aus dem Bucket
+  const UA = navigator.userAgent;
+  const OS = /Win/i.test(UA) ? 'windows' : /Linux|X11/i.test(UA) && !/Android/i.test(UA) ? 'linux' : 'mac';
+  const DATEIEN = { mac: 'DreamOS-mac.zip', windows: 'DreamOS-windows.exe', linux: 'DreamOS-linux.AppImage' };
+  const OSNAME = { mac: 'macOS', windows: 'Windows', linux: 'Linux' };
+  let DATEI = DATEIEN[OS];
+  const $ = id => document.getElementById(id);
+  const zeig = s => ['dl-signup','dl-confirm','dl-login','dl-done'].forEach(x => $(x).style.display = x === s ? 'block' : 'none');
+  const stat = t => $('dl-status').textContent = t || '';
+
+  $('to-login').onclick = e => { e.preventDefault(); zeig('dl-login'); stat(''); };
+  $('to-login-2').onclick = () => { zeig('dl-login'); stat(''); };
+  $('to-signup').onclick = e => { e.preventDefault(); zeig('dl-signup'); stat(''); };
+
+  // Registrieren
+  $('su-btn').onclick = async () => {
+    const email = $('su-email').value.trim(), pass = $('su-pass').value;
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return stat('Bitte eine echte E-Mail-Adresse eingeben.');
+    if (pass.length < 8) return stat('Passwort braucht mindestens 8 Zeichen.');
+    if (!$('su-consent').checked) return stat('Bitte der Datenverarbeitung zustimmen.');
+    stat('lege Konto an…');
+    try {
+      const r = await fetch(SUPA + '/auth/v1/signup', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', apikey: KEY },
+        body: JSON.stringify({ email, password: pass })
+      });
+      const d = await r.json();
+      if (!r.ok) return stat(d.msg || d.error_description || d.error || 'Registrierung fehlgeschlagen — evtl. schon ein Konto? Dann einloggen.');
+      // Bereits bestätigt & eingeloggt (falls E-Mail-Confirm aus)? → direkt laden
+      if (d.access_token) { stat(''); return download(d.access_token); }
+      $('dl-confirm-mail').textContent = email;
+      zeig('dl-confirm'); stat('');
+    } catch (e) { stat('Keine Verbindung. Schreib uns: info@butterbread-tech.com'); }
+  };
+
+  // Einloggen → Download
+  $('li-btn').onclick = async () => {
+    const email = $('li-email').value.trim(), pass = $('li-pass').value;
+    if (!email || !pass) return stat('E-Mail und Passwort eingeben.');
+    stat('logge ein…');
+    try {
+      const r = await fetch(SUPA + '/auth/v1/token?grant_type=password', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', apikey: KEY },
+        body: JSON.stringify({ email, password: pass })
+      });
+      const d = await r.json();
+      if (!r.ok || !d.access_token) {
+        return stat(/confirm/i.test(JSON.stringify(d)) ? 'E-Mail noch nicht bestätigt — schau in dein Postfach.' : 'Login fehlgeschlagen. Passwort korrekt?');
+      }
+      download(d.access_token);
+    } catch (e) { stat('Keine Verbindung. Schreib uns: info@butterbread-tech.com'); }
+  };
+
+  // Download vom Release-Kanal (GitHub Releases: versioniert, immer der neueste Build)
+  // Konto bleibt Voraussetzung (Login oben) — der Kanal selbst ist der offizielle Update-Feed der App.
+  async function download(token) {
+    stat('bereite deinen Download vor…');
+    try {
+      const url = 'https://github.com/yunghundse/dreamos-web/releases/latest/download/' + DATEI;
+      const pruef = await fetch('https://api.github.com/repos/yunghundse/dreamos-web/releases/latest').then(x => x.json()).catch(() => null);
+      const daBei = pruef && (pruef.assets || []).some(a => a.name === DATEI);
+      if (!daBei) return stat(DATEI.includes('mac')
+        ? 'Download noch nicht bereit — versuch es gleich nochmal.'
+        : 'Windows/Linux-Build kommt in Kürze (CI baut gerade) — trag dich oben ein, wir melden uns.');
+      $('dl-again').onclick = e => { e.preventDefault(); window.location.href = url; };
+      zeig('dl-done'); stat('');
+      window.location.href = url;
+    } catch (e) { stat('Download fehlgeschlagen. Schreib uns: info@butterbread-tech.com'); }
+  }
+
+  // OS-Anzeige + Wechsel (falls Auto-Erkennung mal daneben liegt)
+  (function () {
+    const andere = Object.keys(DATEIEN).filter(o => o !== OS);
+    $('dl-os').innerHTML = 'Erkannt: <b>' + OSNAME[OS] + '</b> · anderes System? ' +
+      andere.map(o => '<a href="#" data-os="' + o + '" style="font-weight:600">' + OSNAME[o] + '</a>').join(' · ');
+    $('dl-os').querySelectorAll('a').forEach(a => a.onclick = e => {
+      e.preventDefault(); DATEI = DATEIEN[a.dataset.os];
+      $('dl-os').innerHTML = 'Gewählt: <b>' + OSNAME[a.dataset.os] + '</b> — jetzt oben registrieren &amp; laden.';
+    });
+  })();
+  // Bonus: kommt der Nutzer per Bestätigungs-Link zurück (#access_token=…), direkt laden
+  (function () {
+    const h = new URLSearchParams(location.hash.slice(1));
+    if (h.get('access_token')) { location.hash = ''; download(h.get('access_token')); document.getElementById('download').scrollIntoView(); }
+  })();
+</script>
+<footer>
+  <p style="margin-bottom:10px"><b>Dream OS</b> — ein Produkt von <a href="https://butterbread-tech.com" style="font-weight:600">Butterbread Technologies</a> · Made in Germany 🇩🇪</p>
+  <p><b>Impressum (§ 5 TMG):</b> Butterbread Technologies · Jan Hundsdorff · Sudetenstraße 27 · 72474 Winterlingen · Deutschland<br>
+  E-Mail: info@butterbread-tech.com · Tel: +49 176 63447217 · Verantwortlich i.S.d. § 55 Abs. 2 RStV: Jan Hundsdorff (Anschrift wie oben)</p>
+  <p style="margin-top:8px">© 2026 Butterbread Technologies · <a href="https://butterbread-tech.com/impressum">Impressum &amp; Datenschutz</a> · Vorschau-Version, Preise unverbindlich · Keine Tracking-Cookies</p>
+</footer>
+</body>
+</html>
