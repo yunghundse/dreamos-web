@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de" data-mode="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://moolblfuzesqncxpjxyf.supabase.co; img-src data:; connect-src https://moolblfuzesqncxpjxyf.supabase.co">
+<meta name="theme-color" content="#05060f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Dream OS</title>
+<style>
+  :root { --text:#dfe6f5; --dim:#7d8bad; --cyan:#5eeaff; --violet:#8b7cf8; --ok:#5df0a8; --amber:#ffc466;
+    --glass:rgba(255,255,255,.05); --border:rgba(255,255,255,.11); }
+  * { margin:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif; background:#05060f; color:var(--text);
+    min-height:100dvh; padding:max(14px,env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom)); }
+  #aurora { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  #aurora i { position:absolute; border-radius:50%; filter:blur(90px); opacity:.45; }
+  #aurora i:nth-child(1){ width:70vw;height:70vw;background:radial-gradient(circle,#8b7cf8,transparent 65%);top:-25vw;right:-20vw;animation:d1 40s ease-in-out infinite alternate; }
+  #aurora i:nth-child(2){ width:60vw;height:60vw;background:radial-gradient(circle,#5eeaff,transparent 65%);bottom:-22vw;left:-18vw;opacity:.3;animation:d2 55s ease-in-out infinite alternate; }
+  @keyframes d1 { to { transform:translate(-10vw,8vh) scale(1.15);} }
+  @keyframes d2 { to { transform:translate(8vw,-8vh) scale(1.2);} }
+  main { position:relative; z-index:1; max-width:560px; margin:0 auto; }
+  .card { background:var(--glass); border:1px solid var(--border); border-radius:20px; padding:16px;
+    backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.13), 0 10px 30px rgba(0,0,0,.3); margin-bottom:12px; }
+  h1 { font-size:24px; font-weight:750; letter-spacing:-.4px; }
+  h2 { font-size:12px; font-weight:650; letter-spacing:.6px; text-transform:uppercase; color:var(--cyan); margin-bottom:10px; }
+  .dim { color:var(--dim); }
+  input { width:100%; background:rgba(255,255,255,.07); border:1px solid var(--border); border-radius:13px;
+    color:var(--text); padding:13px 15px; font-size:16px; outline:none; margin-bottom:10px; -webkit-appearance:none; }
+  input:focus { border-color:var(--cyan); }
+  button { border:none; cursor:pointer; font-family:inherit; }
+  .btn { width:100%; padding:14px; border-radius:999px; font-size:15px; font-weight:650; color:#04121a;
+    background:linear-gradient(135deg,var(--ok),var(--cyan)); }
+  .btn2 { background:var(--glass); border:1px solid var(--border); color:var(--text); }
+  .chip { padding:8px 14px; border-radius:999px; font-size:12.5px; background:var(--glass); border:1px solid var(--border); color:var(--text); }
+  .pill { font-size:9.5px; font-weight:700; letter-spacing:.6px; padding:3px 8px; border-radius:99px; }
+  .p-ok { background:rgba(93,240,168,.15); color:var(--ok); }
+  .p-hot { background:rgba(255,196,102,.15); color:var(--amber); }
+  #uhr { font-size:44px; font-weight:750; letter-spacing:-1px; background:linear-gradient(135deg,var(--cyan),var(--violet));
+    -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; }
+  .paket { border-left:3px solid var(--violet); }
+  .paket .txt { font-size:13px; line-height:1.6; color:var(--dim); white-space:pre-line; max-height:150px; overflow:hidden; margin:8px 0; }
+  .paket.auf .txt { max-height:none; }
+  .reihe { display:flex; gap:8px; margin-top:8px; }
+  #hinweis { font-size:12.5px; color:var(--amber); min-height:18px; margin-bottom:8px; }
+  .logo { width:44px; height:44px; border-radius:14px; background:radial-gradient(circle at 35% 35%, var(--violet), #3a2a6a);
+    box-shadow:0 0 24px rgba(139,124,248,.5); margin:0 auto 14px; }
+</style>
+</head>
+<body>
+<div id="aurora"><i></i><i></i></div>
+<main>
+  <!-- ANMELDUNG (wie beim Betriebssystem) -->
+  <section id="s-login" style="padding-top:9vh;text-align:center">
+    <div class="logo"></div>
+    <h1>Dream OS <span style="font-size:11px;vertical-align:super;color:var(--cyan)">WEB</span></h1>
+    <p class="dim" style="font-size:13.5px;margin:8px 0 22px">Dein persönliches KI-Cockpit — Testversion.<br>Anmelden wie beim Betriebssystem, alles verschlüsselt.</p>
+    <div class="card" style="text-align:left">
+      <div id="hinweis"></div>
+      <input type="email" id="email" placeholder="E-Mail" autocomplete="email">
+      <input type="password" id="pass" placeholder="Passwort (mind. 8 Zeichen)" autocomplete="current-password">
+      <button class="btn" id="b-login">Anmelden</button>
+      <button class="btn btn2" id="b-signup" style="margin-top:8px">Neu hier? Konto erstellen</button>
+      <p class="dim" style="font-size:10.5px;margin-top:10px">Konto = E-Mail + Passwort, EU-Server (Supabase Frankfurt), DSGVO. Keine Gesundheits- oder Standortdaten — die bleiben immer auf dem eigenen Rechner. Butterbread Technologies · Jan Hundsdorff · info@butterbread-tech.com</p>
+    </div>
+  </section>
+
+  <!-- COCKPIT -->
+  <section id="s-cockpit" style="display:none">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin:6px 2px 14px">
+      <div><div id="uhr">--:--</div><div id="gruss" class="dim" style="font-size:14px;margin-top:6px">…</div></div>
+      <button class="chip" id="b-logout">Abmelden</button>
+    </div>
+    <div class="card" id="erste" style="display:none;border-left:3px solid var(--cyan)">
+      <h2>Willkommen — so funktioniert's</h2>
+      <p style="font-size:13.5px;line-height:1.8">Das hier ist dein <b>Postfach</b>: Dein KI-Sekretär (auf dem Rechner oder im Dream-OS-Plugin) arbeitet Aufgaben <b>fertig aus</b> und legt sie dir hier hin. Du liest — und tippst nur noch <b>GO</b>.<br><span class="dim" style="font-size:12px">Zum Testen liegen unten zwei Beispiel-Pakete. iPhone-Tipp: Teilen → „Zum Home-Bildschirm" = echte App.</span></p>
+    </div>
+    <div class="card">
+      <h2>Postfach — fertig für dein GO</h2>
+      <div id="pakete"><span class="dim" style="font-size:13px">lade …</span></div>
+    </div>
+    <p class="dim" style="font-size:10.5px;text-align:center;margin-top:14px">Dream OS Web v1 · läuft zusammen mit deinem System, aber getrennt gespeichert — jeder sieht nur seine eigenen Daten (Row Level Security).</p>
+  </section>
+</main>
+<script>
+'use strict';
+const URL_ = 'https://moolblfuzesqncxpjxyf.supabase.co';
+const KEY = 'sb_publishable_dzL1b3JVKqMntnkrTaGeqw_yhI8-uzD'; // publishable = client-safe, Schutz macht RLS
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let SES = null;
+try { SES = JSON.parse(localStorage.getItem('dos_ses') || 'null'); } catch (e) {}
+
+async function api(pfad, opt = {}, auth = true) {
+  const h = { 'apikey': KEY, 'Content-Type': 'application/json', ...(opt.headers || {}) };
+  if (auth && SES) h['Authorization'] = 'Bearer ' + SES.access_token;
+  const r = await fetch(URL_ + pfad, { ...opt, headers: h });
+  const t = await r.text();
+  let j = null; try { j = t ? JSON.parse(t) : null; } catch (e) {}
+  return { ok: r.ok, status: r.status, j };
+}
+
+// ── Anmeldung (Supabase Auth, E-Mail-Bestätigung wie beim OS) ──
+$('#b-signup').onclick = async () => {
+  const email = $('#email').value.trim(), pass = $('#pass').value;
+  if (!email || pass.length < 8) return $('#hinweis').textContent = 'E-Mail + Passwort (mind. 8 Zeichen) eingeben.';
+  $('#hinweis').textContent = 'erstelle Konto …';
+  const r = await api('/auth/v1/signup', { method: 'POST', body: JSON.stringify({ email, password: pass }) }, false);
+  $('#hinweis').textContent = r.ok ? '✓ Bestätigungs-Mail ist raus — Link anklicken, dann hier anmelden.' :
+    (r.j?.msg || r.j?.error_description || 'Konto konnte nicht erstellt werden (E-Mail schon registriert?)');
+};
+$('#b-login').onclick = async () => {
+  const email = $('#email').value.trim(), pass = $('#pass').value;
+  if (!email || !pass) return $('#hinweis').textContent = 'E-Mail und Passwort eingeben.';
+  $('#hinweis').textContent = 'melde an …';
+  const r = await api('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password: pass }) }, false);
+  if (!r.ok) return $('#hinweis').textContent = r.j?.error_description === 'Email not confirmed' ?
+    'E-Mail noch nicht bestätigt — schau in dein Postfach (auch Spam).' : 'Anmeldung fehlgeschlagen — Daten prüfen.';
+  SES = r.j; localStorage.setItem('dos_ses', JSON.stringify(SES));
+  zeigeCockpit();
+};
+$('#b-logout').onclick = () => { localStorage.removeItem('dos_ses'); SES = null; location.reload(); };
+
+// ── Cockpit ──
+function uhr() {
+  const n = new Date();
+  $('#uhr').textContent = n.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  const h = n.getHours(), name = (SES?.user?.email || '').split('@')[0];
+  $('#gruss').textContent = (h < 5 ? 'Späte Stunde, ' : h < 11 ? 'Guten Morgen, ' : h < 18 ? 'Hey, ' : 'Guten Abend, ') + name + '.';
+}
+async function ladePakete() {
+  const r = await api('/rest/v1/pakete?status=neq.erledigt&order=created_at.desc&limit=20');
+  if (r.status === 401) { localStorage.removeItem('dos_ses'); return location.reload(); }
+  let p = r.j || [];
+  if (!p.length && !localStorage.getItem('dos_demo')) {
+    // Erststart: zwei Beispiel-Pakete anlegen, damit man das Prinzip SIEHT (eigene Zeilen, RLS)
+    localStorage.setItem('dos_demo', '1');
+    await api('/rest/v1/pakete', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify([
+      { user_id: SES.user.id, titel: 'Willkommen — so sieht ein fertiges Paket aus', wichtigkeit: 3,
+        inhalt: 'Dein Sekretär hat hier z. B. eine fertige Antwort-Mail, eine Entscheidungsvorlage oder einen Tagesplan ausgearbeitet.\n\nDu liest kurz drüber und tippst GO — dein System wendet es an. Erledigt heißt: weg vom Tisch.' },
+      { user_id: SES.user.id, titel: 'Beispiel: Entscheidungsvorlage Hosting', wichtigkeit: 4,
+        inhalt: 'Option A: Cloudflare Pages — 0 €, schnell, EU.\nOption B: eigener Server — 5 €/Monat, mehr Pflege.\n\nEmpfehlung: Option A, Risiko gering.\n\n(Genau so legt dir die KI künftig echte Entscheidungen vor.)' }
+    ]) });
+    const r2 = await api('/rest/v1/pakete?status=neq.erledigt&order=created_at.desc&limit=20');
+    p = r2.j || [];
+  }
+  $('#erste').style.display = p.length <= 2 ? 'block' : 'none';
+  $('#pakete').innerHTML = p.map(x => `
+    <div class="card paket" data-id="${esc(x.id)}">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <b style="font-size:14.5px;flex:1">${esc(x.titel)}</b>
+        <span class="pill ${x.wichtigkeit >= 4 ? 'p-hot' : ''}" style="border:1px solid var(--border)">${esc(x.wichtigkeit)}/5</span>
+        ${x.status === 'go' ? '<span class="pill p-ok">GO GEGEBEN</span>' : '<span class="pill p-ok">FERTIG — nur noch GO</span>'}
+      </div>
+      <div class="txt">${esc(x.inhalt || '')}</div>
+      <div class="reihe">
+        ${x.status !== 'go' ? `<button class="btn" style="flex:1;padding:11px" data-go="${esc(x.id)}">GO</button>` : ''}
+        <button class="btn btn2" style="flex:1;padding:11px" data-done="${esc(x.id)}">Erledigt</button>
+      </div>
+    </div>`).join('') || '<span class="dim" style="font-size:13px">Leer — dein Sekretär meldet sich, sobald etwas fertig ist.</span>';
+  document.querySelectorAll('.paket .txt').forEach(t => t.onclick = () => t.closest('.paket').classList.toggle('auf'));
+  document.querySelectorAll('[data-go]').forEach(b => b.onclick = async () => {
+    b.textContent = '…'; await api('/rest/v1/pakete?id=eq.' + b.dataset.go, { method: 'PATCH', headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify({ status: 'go', updated_at: new Date().toISOString() }) }); ladePakete();
+  });
+  document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
+    b.textContent = '…'; await api('/rest/v1/pakete?id=eq.' + b.dataset.done, { method: 'PATCH', headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify({ status: 'erledigt', updated_at: new Date().toISOString() }) }); ladePakete();
+  });
+}
+function zeigeCockpit() {
+  $('#s-login').style.display = 'none';
+  $('#s-cockpit').style.display = 'block';
+  uhr(); setInterval(uhr, 20000);
+  ladePakete(); setInterval(ladePakete, 60000);
+}
+if (SES?.access_token) zeigeCockpit();
+</script>
+</body>
+</html>
