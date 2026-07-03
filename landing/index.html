@@ -388,7 +388,7 @@
     let uid = null, email = '';
     try { const p = JSON.parse(atob(AUTH_TOKEN.split('.')[1])); uid = p.sub; email = p.email || ''; } catch (e) {}
     try {
-      await fetch(SUPA + '/rest/v1/beta_fragebogen', {
+      await fetch(SUPA + '/rest/v1/beta_fragebogen?on_conflict=user_id', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + AUTH_TOKEN,
                    Prefer: 'resolution=merge-duplicates,return=minimal' },
