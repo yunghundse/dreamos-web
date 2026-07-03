@@ -101,6 +101,31 @@
   .fixbox b { color:#ffd28a; } .fixbox p { color:var(--dim); font-size:13.5px; margin-top:6px; line-height:1.7; }
   .fixbox code { display:inline-block; background:#0a0c16; border:1px solid rgba(255,255,255,.12); color:#9ff; padding:6px 12px;
     border-radius:8px; font-size:12.5px; margin-top:8px; user-select:all; }
+  /* 🔮 Eigene Orb-Icons als Feature-Symbole (statt Standard-Emojis) */
+  .feat .ic { width:46px; height:46px; background:var(--fi) center/152% no-repeat;
+    -webkit-mask:radial-gradient(circle,#000 43%,transparent 53%); mask:radial-gradient(circle,#000 43%,transparent 53%); }
+  .lock-orb { width:26px; height:26px; display:inline-block; vertical-align:middle; margin-right:7px;
+    background:var(--fi) center/150% no-repeat;
+    -webkit-mask:radial-gradient(circle,#000 43%,transparent 53%); mask:radial-gradient(circle,#000 43%,transparent 53%); }
+  /* 🔮 Beta-Fragebogen (schaltet den Download frei) */
+  #dl-quiz .q-head { display:flex; align-items:center; font-weight:700; font-size:16px; margin-bottom:2px; }
+  .q-orb { width:32px; height:32px; flex:none; display:inline-block; margin-right:9px;
+    background:var(--qi) center/150% no-repeat; animation:navOrbSpin 20s linear infinite;
+    -webkit-mask:radial-gradient(circle,#000 43%,transparent 53%); mask:radial-gradient(circle,#000 43%,transparent 53%); }
+  .q-block { margin:0 0 18px; }
+  .q-block > label { display:block; font-size:13.5px; font-weight:650; color:var(--ink); margin-bottom:9px; }
+  .q-block .hint { font-weight:400; color:var(--dim); font-size:12px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { padding:9px 15px; border-radius:980px; border:1.5px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
+    color:var(--dim); font-size:13px; cursor:pointer; transition:all .18s; user-select:none; }
+  .chip:hover { border-color:rgba(255,255,255,.34); color:var(--ink); }
+  .chip.on { background:linear-gradient(135deg,var(--acc3),var(--acc) 55%,var(--acc2)); border-color:transparent;
+    color:#fff; font-weight:600; box-shadow:0 6px 18px rgba(168,85,247,.4); }
+  #dl-quiz textarea, #dl-quiz input[type=text] { width:100%; padding:12px 14px; border-radius:14px;
+    border:1.5px solid rgba(255,255,255,.15); background:transparent; color:var(--ink); font-size:14px;
+    font-family:inherit; outline:none; box-sizing:border-box; }
+  #dl-quiz textarea { resize:vertical; min-height:58px; }
+  #dl-quiz textarea:focus, #dl-quiz input[type=text]:focus { border-color:var(--acc); }
 </style>
 </head>
 <body>
@@ -119,12 +144,12 @@
   <h2 class="reveal">Wie Jarvis. Nur echt. Und deins.</h2>
   <p class="sub reveal d1">Kein Chatbot-Tab im Browser — ein komplettes Betriebssystem-Erlebnis mit Login, Dock und einem Assistenten mit Stimme, Gedächtnis und Taten.</p>
   <div class="feats">
-    <div class="feat reveal"><div class="ic">🎙</div><h3>Sprich mit deinem Assistenten</h3><p>Leertaste halten, reden, loslassen. Er antwortet mit natürlicher Stimme, kennt deinen Tag — und handelt: Musik, Timer, Erinnerungen, Restaurantsuche an deinem Standort.</p></div>
-    <div class="feat reveal d1"><div class="ic">🧠</div><h3>Ein Gedächtnis, das bleibt</h3><p>„Merke dir…" — für immer gespeichert. Dein Second Brain wächst als sichtbares Neuronen-Netz und lernt aus dem, was du tust. Transparent, nachlesbar, löschbar.</p></div>
-    <div class="feat reveal d2"><div class="ic">🚀</div><h3>Agenten, die vorarbeiten</h3><p>Deine KI-Crew erkennt, was ansteht, arbeitet es fertig aus — gebaut wird erst nach deinem GO, mit Live-Fortschritt. Du bleibst der Chef, immer.</p></div>
-    <div class="feat reveal"><div class="ic">📬</div><h3>Ein Postfach für dein Leben</h3><p>Entscheidungen, Aufgaben, Nachrichten — als Karten zum Abarbeiten. GO tippen, dein System erledigt es. Erledigt heißt erledigt.</p></div>
-    <div class="feat reveal d1"><div class="ic">⌨️</div><h3>Echtes Terminal, das mitlernt</h3><p>Volle Shell in deinem System — Claude Code läuft live darin. Es schreibt mit, versteht deine Arbeit und macht aus Mustern neue Skills.</p></div>
-    <div class="feat reveal d2"><div class="ic">🌐</div><h3>Dream-Net &amp; Skill-Markt</h3><p>Skills der Community mit einem Klick installieren, eigene teilen, News-Netzwerk. Alles geprüft — reine Anweisungen, kein fremder Code.</p></div>
+    <div class="feat reveal"><div class="ic" style="--fi:url('img/orb/francis.png')"></div><h3>Sprich mit deinem Assistenten</h3><p>Leertaste halten, reden, loslassen. Er antwortet mit natürlicher Stimme, kennt deinen Tag — und handelt: Musik, Timer, Erinnerungen, Restaurantsuche an deinem Standort.</p></div>
+    <div class="feat reveal d1"><div class="ic" style="--fi:url('img/orb/brain.png')"></div><h3>Ein Gedächtnis, das bleibt</h3><p>„Merke dir…" — für immer gespeichert. Dein Second Brain wächst als sichtbares Neuronen-Netz und lernt aus dem, was du tust. Transparent, nachlesbar, löschbar.</p></div>
+    <div class="feat reveal d2"><div class="ic" style="--fi:url('img/orb/agenten.png')"></div><h3>Agenten, die vorarbeiten</h3><p>Deine KI-Crew erkennt, was ansteht, arbeitet es fertig aus — gebaut wird erst nach deinem GO, mit Live-Fortschritt. Du bleibst der Chef, immer.</p></div>
+    <div class="feat reveal"><div class="ic" style="--fi:url('img/orb/postfach.png')"></div><h3>Ein Postfach für dein Leben</h3><p>Entscheidungen, Aufgaben, Nachrichten — als Karten zum Abarbeiten. GO tippen, dein System erledigt es. Erledigt heißt erledigt.</p></div>
+    <div class="feat reveal d1"><div class="ic" style="--fi:url('img/orb/cockpit.png')"></div><h3>Echtes Terminal, das mitlernt</h3><p>Volle Shell in deinem System — Claude Code läuft live darin. Es schreibt mit, versteht deine Arbeit und macht aus Mustern neue Skills.</p></div>
+    <div class="feat reveal d2"><div class="ic" style="--fi:url('img/orb/radar.png')"></div><h3>Dream-Net &amp; Skill-Markt</h3><p>Skills der Community mit einem Klick installieren, eigene teilen, News-Netzwerk. Alles geprüft — reine Anweisungen, kein fremder Code.</p></div>
   </div>
 </section>
 
@@ -136,7 +161,7 @@
 
 <section id="download" style="text-align:center">
   <h2 class="reveal">Hol dir die Free-Version.</h2>
-  <p class="sub reveal d1">Kostenlos, für immer. Kurz ein Konto anlegen, E-Mail bestätigen — dann lädt dein persönlicher Download. Dein Konto gibt dir eine eigene ID für Dream-Net &amp; Sync.</p>
+  <p class="sub reveal d1">Kostenlos, für immer. Konto anlegen, E-Mail bestätigen, ein kurzer Fragebogen — dann lädt dein persönlicher Download. So bauen wir Dream OS gemeinsam mit dir.</p>
   <div id="dl-card" style="max-width:440px;margin:0 auto;border-radius:26px;padding:34px;box-shadow:0 20px 50px rgba(139,124,248,.2);text-align:left">
 
     <!-- Schritt 1: Registrieren -->
@@ -169,6 +194,39 @@
       <p style="font-size:12.5px;color:var(--dim);margin:14px 0 0;text-align:center">Noch kein Konto? <a href="#" id="to-signup" style="font-weight:600">Registrieren</a></p>
     </div>
 
+    <!-- Schritt 2c: Beta-Fragebogen — schaltet den Download frei -->
+    <div id="dl-quiz" style="display:none">
+      <div class="q-head"><i class="q-orb" style="--qi:url('img/orb/francis.png')"></i>Kurz kennenlernen</div>
+      <p style="color:var(--dim);font-size:13px;margin:0 0 18px">Ein paar Fragen — damit wir Dream OS für <b>dich</b> bauen. Danach startet dein Download.</p>
+
+      <div class="q-block">
+        <label>Wie sollen wir dich nennen?</label>
+        <input type="text" id="q-name" placeholder="Vorname">
+      </div>
+      <div class="q-block">
+        <label>Wie alt bist du?</label>
+        <div class="chips" data-single id="q-alter"><span class="chip">unter 18</span><span class="chip">18–24</span><span class="chip">25–34</span><span class="chip">35+</span></div>
+      </div>
+      <div class="q-block">
+        <label>Was reizt dich an Dream OS am meisten? <span class="hint">(mehrere möglich)</span></label>
+        <div class="chips" id="q-reiz"><span class="chip">KI-Assistent</span><span class="chip">Privatsphäre</span><span class="chip">Agenten</span><span class="chip">Second Brain</span><span class="chip">Terminal</span><span class="chip">Dream-Net</span></div>
+      </div>
+      <div class="q-block">
+        <label>Wie viel Technik-Erfahrung hast du?</label>
+        <div class="chips" data-single id="q-level"><span class="chip">Anfänger</span><span class="chip">Mittel</span><span class="chip">Profi</span></div>
+      </div>
+      <div class="q-block">
+        <label>Dein Wunsch-Update: Welche Funktion wünschst du dir am meisten?</label>
+        <textarea id="q-wunsch" placeholder="Ich würde mir wünschen, dass Dream OS…"></textarea>
+      </div>
+      <div class="q-block">
+        <label>Was soll Dream OS für dich lösen? <span class="hint">Was nervt dich gerade?</span></label>
+        <textarea id="q-problem" placeholder="Am meisten nervt mich gerade…"></textarea>
+      </div>
+      <button class="btn" id="q-btn" style="width:100%;border:none;cursor:pointer">Absenden &amp; Dream OS laden</button>
+      <p style="font-size:11.5px;color:var(--dim);margin:10px 0 0;text-align:center">Deine Antworten fließen direkt in die Entwicklung — jederzeit löschbar.</p>
+    </div>
+
     <!-- Schritt 3: Fertig -->
     <div id="dl-done" style="display:none;text-align:center">
       <div style="font-size:40px">🎉</div>
@@ -177,19 +235,22 @@
       <p style="color:var(--dim);font-size:12.5px;margin-top:12px">Zip entpacken → <b>Dream OS.app</b>.</p>
     </div>
   </div>
-  <div class="fixbox">
-    <b>⚠️ macOS sagt „Dream OS ist beschädigt"? Ganz normal in der Beta — hier die Lösung.</b>
-    <p>Weil wir (noch) kein 99-€-Apple-Zertifikat haben, blockt macOS unbekannte Apps. <b>Kein echter Schaden.</b> So geht's:<br>
-    <b>1.</b> Zip <b>entpacken</b> (Doppelklick) → daraus wird <b>Dream OS.app</b> · <b>2.</b> App in den Ordner <b>Programme</b> oder <b>Downloads</b> legen · <b>3.</b> Terminal öffnen (Cmd+Leertaste → „Terminal"), diese Zeile einfügen &amp; Enter:</p>
-    <code>xattr -cr ~/Downloads/Dream\ OS.app</code>
-    <p style="margin-top:8px"><b style="color:#7ee787">Wichtig:</b> Es kommt <b>keine Meldung</b> zurück — genau das heißt „hat geklappt". Kein Fehler = Erfolg.<br>
-    <b>4.</b> Dann Rechtsklick auf die App → <b>Öffnen</b> → nochmal <b>Öffnen</b>. Ab jetzt startet sie normal per Doppelklick.<br>
-    <span style="color:#8fa">Windows:</span> „Windows hat den PC geschützt" → <b>Weitere Informationen</b> → <b>Trotzdem ausführen</b>.</p>
+  <p id="dl-status" style="font-size:13px;color:var(--dim);margin:16px auto 0;text-align:center;min-height:18px;max-width:440px"></p>
 
-    <p id="dl-status" style="font-size:13px;color:var(--dim);margin:14px 0 0;text-align:center;min-height:18px"></p>
+  <!-- Download-Anleitung: erscheint ERST nach Anmeldung + Fragebogen -->
+  <div id="dl-extras" style="display:none">
+    <div class="fixbox">
+      <b>⚠️ macOS sagt „Dream OS ist beschädigt"? Ganz normal in der Beta — hier die Lösung.</b>
+      <p>Weil wir (noch) kein 99-€-Apple-Zertifikat haben, blockt macOS unbekannte Apps. <b>Kein echter Schaden.</b> So geht's:<br>
+      <b>1.</b> Zip <b>entpacken</b> (Doppelklick) → daraus wird <b>Dream OS.app</b> · <b>2.</b> App in den Ordner <b>Programme</b> oder <b>Downloads</b> legen · <b>3.</b> Terminal öffnen (Cmd+Leertaste → „Terminal"), diese Zeile einfügen &amp; Enter:</p>
+      <code>xattr -cr ~/Downloads/Dream\ OS.app</code>
+      <p style="margin-top:8px"><b style="color:#7ee787">Wichtig:</b> Es kommt <b>keine Meldung</b> zurück — genau das heißt „hat geklappt". Kein Fehler = Erfolg.<br>
+      <b>4.</b> Dann Rechtsklick auf die App → <b>Öffnen</b> → nochmal <b>Öffnen</b>. Ab jetzt startet sie normal per Doppelklick.<br>
+      <span style="color:#8fa">Windows:</span> „Windows hat den PC geschützt" → <b>Weitere Informationen</b> → <b>Trotzdem ausführen</b>.</p>
+    </div>
+    <p id="dl-os" style="font-size:13px;color:var(--dim);margin-top:16px"></p>
+    <p style="font-size:12px;color:var(--dim);margin-top:6px">Für die lokale KI einmal <a href="https://ollama.com">Ollama</a> installieren (gratis) → <code style="font-size:11px">ollama pull llama3.1:8b</code>. Läuft danach komplett offline auf deinem Rechner.</p>
   </div>
-  <p id="dl-os" style="font-size:13px;color:var(--dim);margin-top:16px"></p>
-  <p style="font-size:12px;color:var(--dim);margin-top:6px">Für die lokale KI einmal <a href="https://ollama.com">Ollama</a> installieren (gratis) → <code style="font-size:11px">ollama pull llama3.1:8b</code>. Läuft danach komplett offline auf deinem Rechner.</p>
 </section>
 
 <section id="preis">
@@ -255,8 +316,9 @@
   const OSNAME = { mac: 'macOS', windows: 'Windows', linux: 'Linux' };
   let DATEI = DATEIEN[OS];
   const $ = id => document.getElementById(id);
-  const zeig = s => ['dl-signup','dl-confirm','dl-login','dl-done'].forEach(x => $(x).style.display = x === s ? 'block' : 'none');
+  const zeig = s => ['dl-signup','dl-confirm','dl-login','dl-quiz','dl-done'].forEach(x => $(x).style.display = x === s ? 'block' : 'none');
   const stat = t => $('dl-status').textContent = t || '';
+  let AUTH_TOKEN = null;   // gesetzt nach Login/Signup — der Fragebogen schaltet den Download frei
 
   $('to-login').onclick = e => { e.preventDefault(); zeig('dl-login'); stat(''); };
   $('to-login-2').onclick = () => { zeig('dl-login'); stat(''); };
@@ -276,8 +338,8 @@
       });
       const d = await r.json();
       if (!r.ok) return stat(d.msg || d.error_description || d.error || 'Registrierung fehlgeschlagen — evtl. schon ein Konto? Dann einloggen.');
-      // Bereits bestätigt & eingeloggt (falls E-Mail-Confirm aus)? → direkt laden
-      if (d.access_token) { stat(''); return download(d.access_token); }
+      // Bereits bestätigt & eingeloggt (falls E-Mail-Confirm aus)? → direkt zum Fragebogen
+      if (d.access_token) { stat(''); AUTH_TOKEN = d.access_token; return zeig('dl-quiz'); }
       $('dl-confirm-mail').textContent = email;
       zeig('dl-confirm'); stat('');
     } catch (e) { stat('Keine Verbindung. Schreib uns: info@butterbread-tech.com'); }
@@ -297,8 +359,43 @@
       if (!r.ok || !d.access_token) {
         return stat(/confirm/i.test(JSON.stringify(d)) ? 'E-Mail noch nicht bestätigt — schau in dein Postfach.' : 'Login fehlgeschlagen. Passwort korrekt?');
       }
-      download(d.access_token);
+      AUTH_TOKEN = d.access_token; stat(''); zeig('dl-quiz');
     } catch (e) { stat('Keine Verbindung. Schreib uns: info@butterbread-tech.com'); }
+  };
+
+  // ── Beta-Fragebogen: Chips wählen, absenden → speichern → Download freischalten ──
+  document.querySelectorAll('#dl-quiz .chips').forEach(box => {
+    const single = box.hasAttribute('data-single');
+    box.querySelectorAll('.chip').forEach(chip => chip.onclick = () => {
+      if (single) box.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+      chip.classList.toggle('on');
+    });
+  });
+  const chipVals = id => [...$(id).querySelectorAll('.chip.on')].map(c => c.textContent);
+  $('q-btn').onclick = async () => {
+    const antworten = {
+      name: $('q-name').value.trim(),
+      alter: chipVals('q-alter')[0] || '',
+      reiz: chipVals('q-reiz'),
+      level: chipVals('q-level')[0] || '',
+      wunsch: $('q-wunsch').value.trim(),
+      problem: $('q-problem').value.trim()
+    };
+    // sanfter Nudge: wenigstens etwas ausfüllen
+    if (!antworten.name && !antworten.alter && !antworten.reiz.length && !antworten.wunsch && !antworten.problem)
+      return stat('Erzähl uns kurz etwas über dich 🙂 — dann geht’s zum Download.');
+    stat('speichere deine Antworten…');
+    let uid = null, email = '';
+    try { const p = JSON.parse(atob(AUTH_TOKEN.split('.')[1])); uid = p.sub; email = p.email || ''; } catch (e) {}
+    try {
+      await fetch(SUPA + '/rest/v1/beta_fragebogen', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + AUTH_TOKEN,
+                   Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ user_id: uid, email, antworten, os: OS })
+      });
+    } catch (e) { /* Download soll auch bei Speicher-Aussetzer nicht blockieren */ }
+    stat(''); download(AUTH_TOKEN);
   };
 
   // Download vom Release-Kanal (GitHub Releases: versioniert, immer der neueste Build)
@@ -313,7 +410,7 @@
         ? 'Download noch nicht bereit — versuch es gleich nochmal.'
         : 'Windows/Linux-Build kommt in Kürze (CI baut gerade) — trag dich oben ein, wir melden uns.');
       $('dl-again').onclick = e => { e.preventDefault(); window.location.href = url; };
-      zeig('dl-done'); stat('');
+      zeig('dl-done'); stat(''); $('dl-extras').style.display = 'block';
       window.location.href = url;
     } catch (e) { stat('Download fehlgeschlagen. Schreib uns: info@butterbread-tech.com'); }
   }
@@ -331,7 +428,7 @@
   // Bonus: kommt der Nutzer per Bestätigungs-Link zurück (#access_token=…), direkt laden
   (function () {
     const h = new URLSearchParams(location.hash.slice(1));
-    if (h.get('access_token')) { location.hash = ''; download(h.get('access_token')); document.getElementById('download').scrollIntoView(); }
+    if (h.get('access_token')) { location.hash = ''; AUTH_TOKEN = h.get('access_token'); zeig('dl-quiz'); document.getElementById('download').scrollIntoView(); }
   })();
 </script>
 <footer>
