@@ -4,15 +4,17 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dream OS — Dein persönliches KI-Betriebssystem</title>
 <style>
-  :root { --ink:#f4f6fc; --dim:#9aa4c8; --acc:#8b7cf8; --acc2:#5eeaff; --bg:#06070f; }
+  :root { --ink:#f4f6fc; --dim:#aab4d6; --acc:#a855f7; --acc2:#22d3ee; --acc3:#f472b6; --bg:#050510; }
   * { box-sizing:border-box; margin:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
     color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased; line-height:1.5; position:relative; overflow-x:hidden; }
-  /* Aurora wie in der App — Glas braucht Farbe dahinter */
+  /* Kräftige Aurora à la Apple Intelligence — satt, präsent, lebendig */
   body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(1100px 700px at 82% -10%, rgba(139,124,248,.22), transparent 55%),
-               radial-gradient(900px 650px at -8% 15%, rgba(94,234,255,.14), transparent 55%),
-               radial-gradient(900px 700px at 50% 115%, rgba(255,110,180,.08), transparent 60%); }
+    background:radial-gradient(1000px 620px at 80% -8%, rgba(168,85,247,.5), transparent 52%),
+               radial-gradient(880px 600px at -6% 12%, rgba(34,211,238,.34), transparent 52%),
+               radial-gradient(820px 680px at 55% 118%, rgba(244,114,182,.28), transparent 58%); }
+  body::after { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.4;
+    background:radial-gradient(600px 400px at 20% 80%, rgba(34,211,238,.25), transparent 60%); }
   body > * { position:relative; z-index:1; }
   nav { position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:28px; padding:14px 6vw;
     background:rgba(8,10,20,.6); backdrop-filter:blur(24px) saturate(180%); border-bottom:1px solid rgba(255,255,255,.07);
@@ -20,17 +22,15 @@
   nav b { color:#fff; font-size:15px; letter-spacing:-.3px; }
   nav a { color:var(--dim); text-decoration:none; } nav a:hover { color:#fff; }
   nav .cta { margin-left:auto; background:linear-gradient(135deg,var(--acc2),var(--acc)); color:#05060c; border-radius:980px; padding:8px 18px; font-weight:700; }
-  .hero { text-align:center; padding:90px 6vw 60px; position:relative; overflow:hidden; }
-  .hero::before { content:""; position:absolute; top:-200px; left:50%; transform:translateX(-50%);
-    width:900px; height:600px; border-radius:50%; filter:blur(90px); opacity:.5; z-index:0;
-    background:radial-gradient(circle at 30% 40%, var(--acc2), transparent 60%),
-               radial-gradient(circle at 70% 60%, var(--acc), transparent 60%); }
+  .hero { text-align:center; padding:110px 6vw 70px; position:relative; overflow:hidden; }
   .hero > * { position:relative; z-index:1; }
-  .hero h1 { font-size:clamp(42px,7vw,80px); font-weight:750; letter-spacing:-2.5px; line-height:1.05; }
-  .hero h1 span { background:linear-gradient(90deg,var(--acc),var(--acc2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .hero p { font-size:clamp(17px,2.2vw,23px); color:var(--dim); max-width:640px; margin:22px auto 34px; font-weight:450; }
-  .btn { display:inline-block; background:linear-gradient(135deg,var(--acc),var(--acc2)); color:#fff; text-decoration:none;
-    border-radius:980px; padding:15px 34px; font-size:16px; font-weight:700; box-shadow:0 12px 34px rgba(124,92,255,.35); }
+  .hero h1 { font-size:clamp(46px,8vw,92px); font-weight:800; letter-spacing:-3px; line-height:1.02; }
+  .hero h1 span { background:linear-gradient(100deg,var(--acc3),var(--acc) 45%,var(--acc2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 40px rgba(168,85,247,.4)); }
+  .hero p { font-size:clamp(18px,2.3vw,25px); color:var(--dim); max-width:660px; margin:26px auto 38px; font-weight:450; }
+  .btn { display:inline-block; background:linear-gradient(135deg,var(--acc3),var(--acc) 50%,var(--acc2)); color:#fff; text-decoration:none;
+    border-radius:980px; padding:16px 38px; font-size:17px; font-weight:700; box-shadow:0 14px 44px rgba(168,85,247,.5); transition:transform .2s,box-shadow .2s; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 20px 56px rgba(168,85,247,.65); }
   .btn.ghost { background:none; color:var(--ink); border:1.5px solid rgba(0,0,0,.18); box-shadow:none; margin-left:12px; }
   .shot { margin:60px auto 0; max-width:960px; border-radius:26px; padding:22px;
     background:linear-gradient(160deg,#0b0e1d,#151a33); box-shadow:0 40px 100px rgba(20,20,60,.35); text-align:left; color:#dfe6f5; }
@@ -114,7 +114,7 @@
       <input type="email" id="su-email" placeholder="deine@email.de" autocomplete="email">
       <input type="password" id="su-pass" placeholder="Passwort (min. 8 Zeichen)" autocomplete="new-password">
       <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--dim);margin:4px 0 14px">
-        <input type="checkbox" id="su-consent" style="margin-top:2px;width:auto"> Ich stimme der Datenverarbeitung laut <a href="https://butterbread-tech.com/impressum">Datenschutzerklärung</a> zu.</label>
+        <input type="checkbox" id="su-consent" style="margin-top:2px;width:auto"> Ich stimme der Datenverarbeitung laut <a href="../dream-os-datenschutz.html" target="_blank">Datenschutzerklärung</a> zu.</label>
       <button class="btn" id="su-btn" style="width:100%;border:none;cursor:pointer">Konto anlegen &amp; laden</button>
       <p style="font-size:12.5px;color:var(--dim);margin:14px 0 0;text-align:center">Schon ein Konto? <a href="#" id="to-login" style="font-weight:600">Einloggen</a></p>
     </div>
@@ -146,12 +146,13 @@
     </div>
   </div>
   <div class="fixbox">
-    <b>⚠️ macOS sagt „Dream OS ist beschädigt"? Das ist normal in der Beta.</b>
-    <p>Weil wir (noch) kein 99-€-Apple-Zertifikat haben, blockt macOS unbekannte Apps. <b>Kein echter Schaden.</b> So startest du sie:<br>
-    <b>1.</b> Terminal öffnen (Cmd+Leertaste → „Terminal") · <b>2.</b> diese Zeile einfügen &amp; Enter (zieht die Blockade weg):</p>
+    <b>⚠️ macOS sagt „Dream OS ist beschädigt"? Ganz normal in der Beta — hier die Lösung.</b>
+    <p>Weil wir (noch) kein 99-€-Apple-Zertifikat haben, blockt macOS unbekannte Apps. <b>Kein echter Schaden.</b> So geht's:<br>
+    <b>1.</b> Zip <b>entpacken</b> (Doppelklick) → daraus wird <b>Dream OS.app</b> · <b>2.</b> App in den Ordner <b>Programme</b> oder <b>Downloads</b> legen · <b>3.</b> Terminal öffnen (Cmd+Leertaste → „Terminal"), diese Zeile einfügen &amp; Enter:</p>
     <code>xattr -cr ~/Downloads/Dream\ OS.app</code>
-    <p style="margin-top:8px"><b>3.</b> Dann Rechtsklick auf die App → <b>Öffnen</b> → nochmal <b>Öffnen</b>. Ab jetzt startet sie normal per Doppelklick.<br>
-    <span style="color:#8fa">Windows-Nutzer:</span> „Windows hat den PC geschützt" → <b>Weitere Informationen</b> → <b>Trotzdem ausführen</b>.</p>
+    <p style="margin-top:8px"><b style="color:#7ee787">Wichtig:</b> Es kommt <b>keine Meldung</b> zurück — genau das heißt „hat geklappt". Kein Fehler = Erfolg.<br>
+    <b>4.</b> Dann Rechtsklick auf die App → <b>Öffnen</b> → nochmal <b>Öffnen</b>. Ab jetzt startet sie normal per Doppelklick.<br>
+    <span style="color:#8fa">Windows:</span> „Windows hat den PC geschützt" → <b>Weitere Informationen</b> → <b>Trotzdem ausführen</b>.</p>
 
     <p id="dl-status" style="font-size:13px;color:var(--dim);margin:14px 0 0;text-align:center;min-height:18px"></p>
   </div>
@@ -292,7 +293,7 @@
   <p style="margin-bottom:10px"><b>Dream OS</b> — ein Produkt von <a href="https://butterbread-tech.com" style="font-weight:600">Butterbread Technologies</a> · Made in Germany 🇩🇪</p>
   <p><b>Impressum (§ 5 TMG):</b> Butterbread Technologies · Jan Hundsdorff · Sudetenstraße 27 · 72474 Winterlingen · Deutschland<br>
   E-Mail: info@butterbread-tech.com · Tel: +49 176 63447217 · Verantwortlich i.S.d. § 55 Abs. 2 RStV: Jan Hundsdorff (Anschrift wie oben)</p>
-  <p style="margin-top:8px">© 2026 Butterbread Technologies · <a href="https://butterbread-tech.com/impressum">Impressum &amp; Datenschutz</a> · Vorschau-Version, Preise unverbindlich · Keine Tracking-Cookies</p>
+  <p style="margin-top:8px">© 2026 Butterbread Technologies · <a href="../dream-os-datenschutz.html">Impressum &amp; Datenschutz</a> · Vorschau-Version, Preise unverbindlich · Keine Tracking-Cookies</p>
 </footer>
 </body>
 </html>
