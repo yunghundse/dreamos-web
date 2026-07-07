@@ -126,6 +126,39 @@
     font-family:inherit; outline:none; box-sizing:border-box; }
   #dl-quiz textarea { resize:vertical; min-height:58px; }
   #dl-quiz textarea:focus, #dl-quiz input[type=text]:focus { border-color:var(--acc); }
+  /* ═══════ 💎 „Er wächst mit dir" — Gedächtnis-Story mit Apple-Glas & animierten Zahlen ═══════ */
+  .grow-card { max-width:540px; margin:48px auto 0; text-align:left; padding:34px;
+    border-radius:30px; background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.13); backdrop-filter:blur(34px) saturate(190%);
+    -webkit-backdrop-filter:blur(34px) saturate(190%);
+    box-shadow:0 40px 100px rgba(20,18,60,.5), inset 0 1px 0 rgba(255,255,255,.18), inset 0 -1px 0 rgba(0,0,0,.2); }
+  .grow-head { display:flex; align-items:center; gap:13px; margin-bottom:18px; }
+  .grow-orb { width:42px; height:42px; flex:none; background:url('img/hero-orb.png') center/135% no-repeat;
+    -webkit-mask:radial-gradient(circle,#000 44%,transparent 56%); mask:radial-gradient(circle,#000 44%,transparent 56%);
+    animation:navOrbSpin 20s linear infinite; }
+  .grow-head b { color:#fff; font-size:16px; display:block; letter-spacing:-.2px; }
+  .grow-head .dim { font-size:12.5px; }
+  .grow-bar { height:8px; border-radius:99px; background:rgba(255,255,255,.08); overflow:hidden; margin-bottom:22px; }
+  .grow-bar i { display:block; height:100%; width:0; border-radius:99px;
+    background:linear-gradient(90deg,var(--acc2),var(--acc),var(--acc3)); transition:width 1.8s cubic-bezier(.16,1,.3,1); }
+  .grow-card.in .grow-bar i { width:84%; }
+  .grow-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px 18px; }
+  .grow-grid > div { display:flex; flex-direction:column; }
+  .grow-grid b { font-size:30px; font-weight:750; color:#fff; line-height:1; letter-spacing:-1px; font-variant-numeric:tabular-nums; }
+  .grow-grid span { font-size:12.5px; color:var(--dim); margin-top:5px; }
+  .grow-note { margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,.09);
+    font-size:13.5px; line-height:1.6; color:var(--dim); }
+  .grow-note b { color:var(--ink); }
+  /* Glas-Design überall verstärken (Apple frosted glass) */
+  .feat, .plan, .privacy, #dl-card { backdrop-filter:blur(30px) saturate(185%) !important;
+    -webkit-backdrop-filter:blur(30px) saturate(185%) !important;
+    box-shadow:0 24px 70px rgba(20,18,55,.35), inset 0 1px 0 rgba(255,255,255,.14) !important; }
+  .feat:hover { transform:translateY(-4px); border-color:rgba(255,255,255,.2);
+    box-shadow:0 32px 80px rgba(94,60,220,.28), inset 0 1px 0 rgba(255,255,255,.2) !important; }
+  .feat { transition:transform .4s cubic-bezier(.16,1,.3,1), border-color .3s, box-shadow .3s; }
+  /* Feature-Icons (Orb) größer & mit weichem Glow — Apple-Präsentation */
+  .feat .ic { width:52px; height:52px; filter:drop-shadow(0 5px 14px rgba(94,140,255,.35)); }
+  .feat:hover .ic { filter:drop-shadow(0 6px 18px rgba(139,124,248,.55)) brightness(1.1); transition:filter .3s; }
 </style>
 </head>
 <body>
@@ -139,6 +172,25 @@
   <p class="mini" style="font-size:13.5px;margin-top:26px;color:var(--dim)">Mac &amp; Windows · Läuft komplett lokal · Beta</p>
   <div class="mini scroll-hint" style="margin-top:64px;color:var(--dim);font-size:11px;letter-spacing:2.5px;text-transform:uppercase">Scroll ↓</div>
 </div>
+
+<section id="waechst" style="text-align:center">
+  <h2 class="reveal">Er wächst mit dir.</h2>
+  <p class="sub reveal d1">Je länger du Dream OS nutzt, desto besser kennt dich dein Assistent. Und dieses Wissen gehört <b style="color:var(--ink)">dir</b> — es lebt auf deinem Gerät, nicht in einer fremden Cloud.</p>
+  <div class="grow-card reveal d2">
+    <div class="grow-head">
+      <span class="grow-orb"></span>
+      <div style="text-align:left"><b>Dein Assistent kennt dich</b><span class="dim">wächst mit jedem Tag</span></div>
+    </div>
+    <div class="grow-bar"><i></i></div>
+    <div class="grow-grid">
+      <div><b class="cnt" data-to="240">0</b><span>Fakten gemerkt</span></div>
+      <div><b class="cnt" data-to="180">0</b><span>Routinen gelernt</span></div>
+      <div><b class="cnt" data-to="1200">0</b><span>Zusammenhänge</span></div>
+      <div><b class="cnt" data-to="60" data-suffix=" h">0</b><span>Zeit gespart</span></div>
+    </div>
+    <p class="grow-note">Nach ein paar Wochen ist dieser Wert unbezahlbar. Free nutzt ihn lokal — <b>Premium sichert ihn:</b> verschlüsseltes Backup &amp; Sync über all deine Geräte.</p>
+  </div>
+</section>
 
 <section id="feat">
   <h2 class="reveal">Wie Jarvis. Nur echt. Und deins.</h2>
@@ -298,6 +350,16 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // 💎 Zahlen zählen hoch, sobald die Gedächtnis-Karte in Sicht kommt (Apple-Count-up)
+  const cntObs = new IntersectionObserver((es) => es.forEach(e => {
+    if (!e.isIntersecting) return; cntObs.unobserve(e.target);
+    const el = e.target, to = +el.dataset.to, suf = el.dataset.suffix || '', dur = 1500, t0 = performance.now();
+    const step = (t) => { const p = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('de-DE') + suf;
+      if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), { threshold: 0.6 });
+  document.querySelectorAll('.cnt').forEach(c => cntObs.observe(c));
   // 🌊 Parallax: Hero-Aurora bewegt sich sanft langsamer als der Scroll
   const hero = document.querySelector('.hero');
   addEventListener('scroll', () => {
