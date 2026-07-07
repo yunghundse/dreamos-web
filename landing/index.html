@@ -179,7 +179,22 @@
   .intro-hint { position:absolute; bottom:34px; left:50%; transform:translateX(-50%); z-index:4; color:var(--dim);
     font-size:11px; letter-spacing:2.5px; text-transform:uppercase; animation:bob 2s ease-in-out infinite; transition:opacity .4s; }
   .intro-hint.gone { opacity:0; }
-  @media (prefers-reduced-motion:reduce) { #intro { height:100vh; } .intro-orb { transform:scale(.9); } #brain-net { display:none; } }
+  /* 🎥 Dramatik: Aura, Partikel, Kino-Vignette, Lichtdurchbruch, Text-Einflug */
+  .intro-aura { position:absolute; width:min(680px,88vw); aspect-ratio:1; z-index:1; border-radius:50%;
+    background:radial-gradient(circle, rgba(139,124,248,.5), rgba(94,234,255,.2) 42%, transparent 66%);
+    filter:blur(55px); animation:auraPulse 5s ease-in-out infinite; will-change:transform,opacity; }
+  @keyframes auraPulse { 0%,100% { transform:scale(1); opacity:.7; } 50% { transform:scale(1.16); opacity:1; } }
+  #intro-particles { position:absolute; inset:0; width:100%; height:100%; z-index:4; pointer-events:none; }
+  .intro-flash { position:absolute; inset:0; z-index:5; pointer-events:none; opacity:0; will-change:opacity;
+    background:radial-gradient(circle at center, #fff, rgba(200,220,255,.55) 28%, transparent 60%); mix-blend-mode:screen; }
+  .intro-vignette { position:absolute; inset:0; z-index:7; pointer-events:none;
+    background:radial-gradient(circle at center, transparent 42%, rgba(2,2,10,.5) 100%);
+    box-shadow:inset 0 0 220px 60px rgba(0,0,0,.65); }
+  #brain-net { z-index:3; } .intro-copy { z-index:6 !important; } .intro-hint { z-index:8 !important; }
+  .ic-line h1 { text-shadow:0 4px 60px rgba(139,124,248,.5), 0 2px 22px rgba(0,0,0,.55); }
+  .ic-line.on h1 { animation:icRise 1s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes icRise { from { opacity:0; transform:translateY(30px); filter:blur(9px); } to { opacity:1; transform:none; filter:blur(0); } }
+  @media (prefers-reduced-motion:reduce) { #intro { height:100vh; } .intro-orb { transform:scale(.9); } #brain-net,#intro-particles { display:none; } }
 </style>
 </head>
 <body>
@@ -188,8 +203,12 @@
 <!-- 🎬 Cinematische Intro: reinzoomen ins Orb = dein Zweitgehirn, das mit dir wächst -->
 <div id="intro">
   <div class="intro-stage">
+    <div class="intro-aura"></div>
     <canvas id="brain-net"></canvas>
+    <canvas id="intro-particles"></canvas>
     <div class="intro-orb"></div>
+    <div class="intro-flash"></div>
+    <div class="intro-vignette"></div>
     <div class="intro-copy">
       <div class="ic-line" data-p="0"><span class="ic-kicker">Dream OS</span><h1>Dein Zweitgehirn.</h1></div>
       <div class="ic-line" data-p="1"><h1>Es kennt <span>dich</span>.</h1></div>
@@ -427,6 +446,29 @@
         ctx.beginPath(); ctx.arc(n.x, n.y, n.s, 0, 6.283); ctx.fill(); });
     }
     const lines = [...document.querySelectorAll('.ic-line')];
+    const flash = document.querySelector('.intro-flash'), aura = document.querySelector('.intro-aura');
+    // ✨ Energie-Partikel, die aus dem Orb strömen (dramatisches Leben)
+    const pcv = document.getElementById('intro-particles');
+    let pIntensity = 1;
+    if (pcv) {
+      const pctx = pcv.getContext('2d'); let PW, PH, parts = [];
+      const newPart = () => ({ a: Math.random() * 6.283, r: Math.random() * 26 * DPR,
+        sp: (Math.random() * 0.7 + 0.3) * DPR, hue: [190, 265, 320][Math.floor(Math.random() * 3)], life: Math.random() });
+      const pbuild = () => { PW = pcv.width = stage.offsetWidth * DPR; PH = pcv.height = stage.offsetHeight * DPR; };
+      pbuild(); addEventListener('resize', pbuild);
+      for (let i = 0; i < 70; i++) parts.push(newPart());
+      (function ploop() {
+        pctx.clearRect(0, 0, PW, PH); const cx = PW / 2, cy = PH / 2, maxR = Math.min(PW, PH) * 0.5;
+        parts.forEach(p => {
+          p.r += p.sp * (1 + pIntensity * 2.5); p.life -= 0.006;
+          if (p.life <= 0 || p.r > maxR) Object.assign(p, newPart(), { r: 0, life: 1 });
+          const x = cx + Math.cos(p.a) * p.r, y = cy + Math.sin(p.a) * p.r;
+          pctx.fillStyle = `hsla(${p.hue},92%,70%,${p.life * 0.55 * pIntensity})`;
+          pctx.beginPath(); pctx.arc(x, y, 1.5 * DPR, 0, 6.283); pctx.fill();
+        });
+        requestAnimationFrame(ploop);
+      })();
+    }
     let ticking = false;
     function frame() {
       ticking = false;
@@ -439,6 +481,10 @@
       const phase = p < 0.26 ? 0 : p < 0.5 ? 1 : p < 0.72 ? 2 : 3;
       lines.forEach(l => l.classList.toggle('on', +l.dataset.p === phase));
       document.querySelector('.intro-hint')?.classList.toggle('gone', p > 0.06);
+      // 🎥 Lichtdurchbruch beim Eintauchen (~52 %), Aura & Partikel faden während des Zooms
+      if (flash) flash.style.opacity = Math.max(0, 1 - Math.abs(p - 0.52) / 0.055) * 0.92;
+      if (aura) aura.style.opacity = Math.max(0, 1 - p * 2.4);
+      pIntensity = Math.max(0.05, 1 - p * 1.7);
     }
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
     frame();
