@@ -159,18 +159,50 @@
   /* Feature-Icons (Orb) größer & mit weichem Glow — Apple-Präsentation */
   .feat .ic { width:52px; height:52px; filter:drop-shadow(0 5px 14px rgba(94,140,255,.35)); }
   .feat:hover .ic { filter:drop-shadow(0 6px 18px rgba(139,124,248,.55)) brightness(1.1); transition:filter .3s; }
+  /* ═══════ 🎬 CINEMATISCHE INTRO — reinzoomen ins wachsende Zweitgehirn ═══════ */
+  #intro { position:relative; height:360vh; }
+  .intro-stage { position:sticky; top:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  #brain-net { position:absolute; inset:0; width:100%; height:100%; opacity:0; pointer-events:none; transition:opacity .5s; }
+  .intro-orb { position:absolute; width:min(320px,58vw); aspect-ratio:1; z-index:2;
+    background:url('img/hero-orb.png') center/contain no-repeat; mix-blend-mode:screen;
+    -webkit-mask:radial-gradient(circle,#000 46%,transparent 62%); mask:radial-gradient(circle,#000 46%,transparent 62%);
+    will-change:transform,opacity; transform:scale(.6); }
+  .intro-copy { position:relative; z-index:3; width:100%; height:100%; }
+  .ic-line { position:absolute; left:50%; top:50%; transform:translate(-50%,-44%); width:min(800px,90vw); text-align:center;
+    opacity:0; transition:opacity .5s ease, transform .7s cubic-bezier(.16,1,.3,1); pointer-events:none; }
+  .ic-line.on { opacity:1; transform:translate(-50%,-50%); pointer-events:auto; }
+  .ic-kicker { display:block; font-size:13px; letter-spacing:4px; text-transform:uppercase; color:var(--acc2); margin-bottom:16px; font-weight:600; }
+  .ic-line h1 { font-size:clamp(42px,8.5vw,94px); font-weight:700; letter-spacing:-3px; color:#fff; line-height:1.02;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif; text-shadow:0 4px 40px rgba(0,0,0,.5); }
+  .ic-line h1 span { background:linear-gradient(100deg,#c8a8ff,#7dd3fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .ic-final p { font-size:clamp(17px,2.1vw,21px); color:var(--dim); max-width:560px; margin:26px auto 34px; line-height:1.55; }
+  .intro-hint { position:absolute; bottom:34px; left:50%; transform:translateX(-50%); z-index:4; color:var(--dim);
+    font-size:11px; letter-spacing:2.5px; text-transform:uppercase; animation:bob 2s ease-in-out infinite; transition:opacity .4s; }
+  .intro-hint.gone { opacity:0; }
+  @media (prefers-reduced-motion:reduce) { #intro { height:100vh; } .intro-orb { transform:scale(.9); } #brain-net { display:none; } }
 </style>
 </head>
 <body>
 <nav><b class="nav-brand"><span class="nav-orb"></span>Dream OS</b><a href="#feat">Funktionen</a><a href="#privacy">Privatsphäre</a><a href="#preis">Preis</a><a href="../dream-os-guide.html">Anleitung</a><a href="#warteliste">Warteliste</a><a class="cta" href="#download">Kostenlos laden</a></nav>
 
-<div class="hero">
-  <div class="orb"></div>
-  <h1>Dein eigenes<br><span>KI-Betriebssystem.</span></h1>
-  <p>Ein Assistent, der dich wirklich kennt. Und alles bleibt da, wo es hingehört — <b style="color:#f4f6fc">auf deinem Gerät.</b></p>
-  <div class="cta-row"><a class="btn" href="#download">Kostenlos laden</a><a class="btn ghost" href="#warteliste">Warteliste</a></div>
-  <p class="mini" style="font-size:13.5px;margin-top:26px;color:var(--dim)">Mac &amp; Windows · Läuft komplett lokal · Beta</p>
-  <div class="mini scroll-hint" style="margin-top:64px;color:var(--dim);font-size:11px;letter-spacing:2.5px;text-transform:uppercase">Scroll ↓</div>
+<!-- 🎬 Cinematische Intro: reinzoomen ins Orb = dein Zweitgehirn, das mit dir wächst -->
+<div id="intro">
+  <div class="intro-stage">
+    <canvas id="brain-net"></canvas>
+    <div class="intro-orb"></div>
+    <div class="intro-copy">
+      <div class="ic-line" data-p="0"><span class="ic-kicker">Dream OS</span><h1>Dein Zweitgehirn.</h1></div>
+      <div class="ic-line" data-p="1"><h1>Es kennt <span>dich</span>.</h1></div>
+      <div class="ic-line" data-p="2"><h1>Und wächst mit <span>dir</span>.</h1></div>
+      <div class="ic-line ic-final" data-p="3">
+        <h1>Dein eigenes<br><span>KI-Betriebssystem.</span></h1>
+        <p>Ein Assistent, der dich wirklich kennt — und alles bleibt <b style="color:#f4f6fc">auf deinem Gerät.</b></p>
+        <div class="cta-row"><a class="btn" href="#download">Kostenlos laden</a><a class="btn ghost" href="#warteliste">Warteliste</a></div>
+        <p class="mini" style="font-size:13.5px;margin-top:22px;color:var(--dim)">Mac &amp; Windows · Läuft komplett lokal · Beta</p>
+      </div>
+    </div>
+    <div class="intro-hint">Scroll ↓</div>
+  </div>
 </div>
 
 <section id="waechst" style="text-align:center">
@@ -360,6 +392,57 @@
     requestAnimationFrame(step);
   }), { threshold: 0.6 });
   document.querySelectorAll('.cnt').forEach(c => cntObs.observe(c));
+
+  // 🎬 Cinematische Intro: reinzoomen ins Orb (= Zweitgehirn), Neuronen-Netz wächst mit dem Scroll
+  (function introCinema() {
+    const stage = document.querySelector('.intro-stage'), orb = document.querySelector('.intro-orb');
+    const cv = document.getElementById('brain-net'), intro = document.getElementById('intro');
+    if (!stage || !cv || !intro) return;
+    const ctx = cv.getContext('2d'), DPR = Math.min(2, devicePixelRatio || 1);
+    let W, H, nodes = [], edges = [];
+    function build() {
+      W = cv.width = stage.offsetWidth * DPR; H = cv.height = stage.offsetHeight * DPR;
+      nodes = []; edges = [];
+      const N = 92, cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.44;
+      for (let i = 0; i < N; i++) {
+        const a = Math.random() * Math.PI * 2, r = Math.pow(Math.random(), 0.6) * R;
+        nodes.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r, s: (Math.random() * 2.4 + 1.8) * DPR,
+          hue: [190, 265, 320][Math.floor(Math.random() * 3)], born: Math.random() });
+      }
+      for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) {
+        const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+        if (d < R * 0.42 && Math.random() < 0.13) edges.push([i, j, Math.max(nodes[i].born, nodes[j].born)]);
+      }
+    }
+    build(); addEventListener('resize', build);
+    function draw(grow) {
+      ctx.clearRect(0, 0, W, H);
+      edges.forEach(([a, b, born]) => { if (born > grow) return;
+        const al = Math.min(1, (grow - born) * 3) * 0.32;
+        ctx.strokeStyle = `rgba(150,185,255,${al})`; ctx.lineWidth = DPR;
+        ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke(); });
+      nodes.forEach(n => { if (n.born > grow) return;
+        const al = Math.min(1, (grow - n.born) * 3);
+        ctx.fillStyle = `hsla(${n.hue},92%,68%,${al * 0.92})`;
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.s, 0, 6.283); ctx.fill(); });
+    }
+    const lines = [...document.querySelectorAll('.ic-line')];
+    let ticking = false;
+    function frame() {
+      ticking = false;
+      const rect = intro.getBoundingClientRect(), total = intro.offsetHeight - innerHeight;
+      const p = Math.min(1, Math.max(0, -rect.top / total));
+      orb.style.transform = `scale(${0.6 + Math.pow(p, 1.5) * 13})`;
+      orb.style.opacity = p < 0.5 ? 1 : Math.max(0, 1 - (p - 0.5) * 4.5);
+      cv.style.opacity = p > 0.4 ? Math.min(1, (p - 0.4) * 4) : 0;
+      const netP = (p - 0.38) / 0.62; if (netP > 0) draw(Math.min(1, netP));
+      const phase = p < 0.26 ? 0 : p < 0.5 ? 1 : p < 0.72 ? 2 : 3;
+      lines.forEach(l => l.classList.toggle('on', +l.dataset.p === phase));
+      document.querySelector('.intro-hint')?.classList.toggle('gone', p > 0.06);
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+    frame();
+  })();
   // 🌊 Parallax: Hero-Aurora bewegt sich sanft langsamer als der Scroll
   const hero = document.querySelector('.hero');
   addEventListener('scroll', () => {
