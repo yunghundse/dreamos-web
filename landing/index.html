@@ -195,6 +195,38 @@
   .ic-line.on h1 { animation:icRise 1s cubic-bezier(.16,1,.3,1) both; }
   @keyframes icRise { from { opacity:0; transform:translateY(30px); filter:blur(9px); } to { opacity:1; transform:none; filter:blur(0); } }
   @media (prefers-reduced-motion:reduce) { #intro { height:100vh; } .intro-orb { transform:scale(.9); } #brain-net,#intro-particles { display:none; } }
+  /* ═══════ 🖥 LEBENDIGES COCKPIT-MOCKUP ═══════ */
+  .mock { max-width:860px; margin:52px auto 0; border-radius:22px; overflow:hidden; text-align:left;
+    background:linear-gradient(165deg, rgba(20,24,45,.92), rgba(10,13,28,.96));
+    border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(30px) saturate(180%);
+    box-shadow:0 50px 120px rgba(15,15,55,.6), inset 0 1px 0 rgba(255,255,255,.14); }
+  .mock-bar { display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid rgba(255,255,255,.07); }
+  .mock-bar i { width:11px; height:11px; border-radius:50%; margin-right:7px; }
+  .mock-bar i:nth-child(1){background:#ff5f57} .mock-bar i:nth-child(2){background:#febc2e} .mock-bar i:nth-child(3){background:#28c840}
+  .mock-title { margin-left:8px; font-size:12px; color:var(--dim); }
+  .mock-nav { display:flex; gap:4px; padding:12px 16px 0; flex-wrap:wrap; }
+  .mn { font-size:12.5px; color:var(--dim); padding:7px 14px; border-radius:10px; }
+  .mn.on { background:linear-gradient(135deg, rgba(94,234,255,.2), rgba(139,124,248,.2)); color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.2); }
+  .mock-body { padding:22px 24px 26px; }
+  .mock-top { display:flex; align-items:center; gap:18px; margin-bottom:20px; }
+  .mock-clock b { font-size:50px; font-weight:250; letter-spacing:-2px; color:#fff; font-variant-numeric:tabular-nums;
+    background:linear-gradient(180deg,#fff,#7dd3fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .mock-greet { flex:1; } .mock-greet b { font-size:18px; color:#fff; display:block; }
+  .mock-focus { font-size:13px; color:#5df0a8; margin-top:4px; display:block; }
+  .mock-orb { width:46px; height:46px; flex:none; background:url('img/hero-orb.png') center/135% no-repeat;
+    -webkit-mask:radial-gradient(circle,#000 44%,transparent 56%); mask:radial-gradient(circle,#000 44%,transparent 56%);
+    animation:orbBreath 3s ease-in-out infinite; }
+  @keyframes orbBreath { 0%,100%{transform:scale(1);filter:brightness(1)} 50%{transform:scale(1.08);filter:brightness(1.28)} }
+  .mock-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .mtile { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:15px;
+    opacity:0; transform:translateY(16px); }
+  .mock.in .mtile { animation:tileIn .6s cubic-bezier(.16,1,.3,1) forwards; }
+  .mock.in .mtile:nth-child(1){animation-delay:.12s} .mock.in .mtile:nth-child(2){animation-delay:.24s}
+  .mock.in .mtile:nth-child(3){animation-delay:.36s} .mock.in .mtile:nth-child(4){animation-delay:.48s}
+  @keyframes tileIn { to { opacity:1; transform:none; } }
+  .mtile .mk { font-size:11px; color:var(--dim); } .mtile b { font-size:28px; font-weight:700; color:#fff; display:block; margin:5px 0 2px; }
+  .mtile .ml { font-size:11px; color:var(--dim); }
+  @media (max-width:640px){ .mock-grid{grid-template-columns:1fr 1fr} .mock-clock b{font-size:38px} }
 </style>
 </head>
 <body>
@@ -240,6 +272,28 @@
       <div><b class="cnt" data-to="60" data-suffix=" h">0</b><span>Zeit gespart</span></div>
     </div>
     <p class="grow-note">Nach ein paar Wochen ist dieser Wert unbezahlbar. Free nutzt ihn lokal — <b>Premium sichert ihn:</b> verschlüsseltes Backup &amp; Sync über all deine Geräte.</p>
+  </div>
+</section>
+
+<section id="live" style="text-align:center">
+  <h2 class="reveal">Ein Blick. Alles da.</h2>
+  <p class="sub reveal d1">Kein Wühlen in Apps. Dein Cockpit zeigt Fokus, Termine und was ansteht — auf einen Blick.</p>
+  <div class="mock reveal d2">
+    <div class="mock-bar"><i></i><i></i><i></i><span class="mock-title">Dream OS — Cockpit</span></div>
+    <div class="mock-nav"><span class="mn on">Cockpit</span><span class="mn">Postfach</span><span class="mn">Wissen</span><span class="mn">Kalender</span><span class="mn">Agenten</span></div>
+    <div class="mock-body">
+      <div class="mock-top">
+        <div class="mock-clock"><b id="mock-time">09:41</b></div>
+        <div class="mock-greet"><b>Guten Morgen, Alex.</b><span class="mock-focus">🎯 Fokus: Deep Work — die nächsten 90 Minuten</span></div>
+        <div class="mock-orb"></div>
+      </div>
+      <div class="mock-grid">
+        <div class="mtile"><span class="mk">Postfach</span><b>3</b><span class="ml">warten auf dich</span></div>
+        <div class="mtile"><span class="mk">Heute</span><b>4</b><span class="ml">Termine</span></div>
+        <div class="mtile"><span class="mk">Gemerkt</span><b>240</b><span class="ml">Fakten</span></div>
+        <div class="mtile"><span class="mk">Chancen</span><b>2</b><span class="ml">neu entdeckt</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -488,6 +542,13 @@
     }
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
     frame();
+  })();
+
+  // 🖥 Mockup-Uhr tickt in Echtzeit
+  (function mockClock() {
+    const el = document.getElementById('mock-time'); if (!el) return;
+    const tick = () => el.textContent = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    tick(); setInterval(tick, 15000);
   })();
   // 🌊 Parallax: Hero-Aurora bewegt sich sanft langsamer als der Scroll
   const hero = document.querySelector('.hero');
