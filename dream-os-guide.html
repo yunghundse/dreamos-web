@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dream OS — So nutzt du deinen Assistenten richtig</title>
+<style>
+  :root { --ink:#f4f6fc; --dim:#aab4d6; --acc:#a855f7; --acc2:#22d3ee; --acc3:#f472b6; --bg:#050510; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  body::before { content:""; position:fixed; inset:-20%; z-index:0; pointer-events:none;
+    background:radial-gradient(760px 500px at 82% -8%, rgba(168,85,247,.22), transparent 55%),
+               radial-gradient(680px 460px at 8% 4%, rgba(34,211,238,.14), transparent 55%); }
+  .wrap { position:relative; z-index:1; max-width:760px; margin:0 auto; padding:64px 22px 90px; }
+  .nav { font-size:13px; margin-bottom:44px; display:flex; align-items:center; gap:9px; color:var(--dim); }
+  .nav .orb { width:26px; height:26px; background:url('landing/img/hero-orb.png') center/135% no-repeat;
+    -webkit-mask:radial-gradient(circle,#000 44%,transparent 56%); mask:radial-gradient(circle,#000 44%,transparent 56%);
+    animation:spin 20s linear infinite; } @keyframes spin { to { transform:rotate(360deg); } }
+  .nav b { color:#fff; } .nav a { color:var(--acc2); text-decoration:none; margin-left:auto; }
+  h1 { font-size:clamp(30px,5.5vw,46px); font-weight:700; letter-spacing:-1.4px; line-height:1.1; color:#fff; }
+  .lead { font-size:18px; color:var(--dim); margin:16px 0 8px; }
+  h2 { font-size:23px; font-weight:700; letter-spacing:-.6px; color:#fff; margin:52px 0 6px; display:flex; gap:11px; align-items:baseline; }
+  h2 .n { font-size:14px; color:var(--acc2); font-variant-numeric:tabular-nums; font-weight:600; }
+  p { color:#cdd5ec; font-size:15.5px; margin:12px 0; }
+  .dim { color:var(--dim); } b, strong { color:#fff; font-weight:600; }
+  .card { background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.1); border-radius:20px;
+    padding:22px 24px; margin:20px 0; backdrop-filter:blur(20px); }
+  .card.hero-card { border-color:rgba(168,85,247,.3); background:linear-gradient(160deg, rgba(168,85,247,.1), rgba(34,211,238,.05)); }
+  .kv { display:grid; grid-template-columns:110px 1fr; gap:6px 16px; margin:14px 0; font-size:14.5px; }
+  .kv b { color:var(--acc2); } .kv span { color:#cdd5ec; }
+  code { background:rgba(34,211,238,.14); color:#9becff; padding:2px 8px; border-radius:7px; font-size:13.5px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace; }
+  .tip { display:flex; gap:12px; align-items:flex-start; margin:10px 0; font-size:15px; }
+  .tip .b { color:var(--acc3); flex:none; font-weight:700; }
+  .foot { margin-top:64px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); color:var(--dim); font-size:13px; }
+  .foot a { color:var(--acc2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><span class="orb"></span><b>Dream OS</b><a href="landing/">← Zur Startseite</a></div>
+
+  <h1>So nutzt du deinen<br>Assistenten richtig.</h1>
+  <p class="lead">In 5 Minuten verstehst du, wie du das Meiste aus Dream OS holst — locker erklärt, ohne Technik-Kauderwelsch.</p>
+
+  <h2><span class="n">01</span> Francis ist nicht Claude — und das ist der Punkt</h2>
+  <div class="card hero-card">
+    <p style="margin-top:0"><b>Claude</b> (oder ein anderes Modell) ist ein <b>Gehirn</b> — schlau, aber ein leeres Blatt. Es kennt dich nicht.</p>
+    <p><b>Francis</b> ist <b>dein Assistent in Dream OS</b>. Er benutzt so ein Gehirn als Motor — aber er <b>kennt dich</b>: deinen Tag, deine Projekte, dein Gedächtnis. Und er <b>handelt</b> für dich.</p>
+    <p class="dim" style="margin-bottom:0">Bild dir vor: <b>Claude ist der Motor. Francis ist das ganze Auto</b> — mit deinem Sitz, deinem Navi, das deine Wege kennt, und er fährt für dich.</p>
+  </div>
+  <p>Der Unterschied im Alltag: Ein Chatbot vergisst dich nach jedem Gespräch. Francis merkt sich alles, läuft <b>auf deinem Gerät</b> (privat) und erledigt Dinge — statt nur zu reden. Deinen Assistenten kannst du übrigens beim Einrichten benennen und ihm einen Charakter geben — er muss nicht „Francis" heißen.</p>
+
+  <h2><span class="n">02</span> Wie du mit ihm redest</h2>
+  <div class="kv">
+    <b>Sprechen</b><span><b>Leertaste halten</b>, reden, loslassen. Er antwortet mit echter Stimme.</span>
+    <b>Tippen</b><span>Der Chat unten rechts (der Orb) — von überall in der App erreichbar.</span>
+    <b>Terminal</b><span>Für alles Schnelle: einfach auf Deutsch reinschreiben.</span>
+  </div>
+  <p class="dim">Frag ruhig normal, wie einem Menschen: „Was steht heute an?", „Erinnere mich um 18 Uhr ans Training", „Fass mir die Mail zusammen".</p>
+
+  <h2><span class="n">03</span> Lokale KI oder Claude — wann was?</h2>
+  <p>Dream OS hat <b>zwei Motoren</b> und wählt meist selbst den passenden:</p>
+  <div class="kv">
+    <b>Lokale KI</b><span><b>Gratis &amp; privat.</b> Läuft auf deinem Rechner (Ollama). Fürs Alltägliche: erkennen, kurze Antworten, ordnen. Kostet nichts, verlässt dein Gerät nie.</span>
+    <b>Claude</b><span><b>Fürs schwere Denken.</b> Komplexe Aufgaben, Code, lange Texte. Nutzt dein eigenes Claude-Abo. Stärker, aber verbraucht Kontingent.</span>
+  </div>
+  <p>Faustregel: <b>Alltag → lokal</b> (kostenlos), <b>kniffliges Projekt → Claude</b>. Du kannst den Motor jederzeit selbst umschalten.</p>
+
+  <h2><span class="n">04</span> Das Gedächtnis — dein zweites Gehirn</h2>
+  <p>Sag einfach <code>merk dir …</code> — und es bleibt. Für immer.</p>
+  <div class="tip"><span class="b">→</span><span>„Merk dir: Meine Schwester hat am 12. März Geburtstag."</span></div>
+  <div class="tip"><span class="b">→</span><span>„Merk dir: Für das Projekt X ist Anna die Ansprechpartnerin."</span></div>
+  <p class="dim">Alles landet als lesbare Datei in deinem <b>Dream-OS-Ordner</b>. Du kannst jederzeit selbst reinschauen, ändern oder löschen. Nichts ist in einer fremden Cloud eingesperrt.</p>
+
+  <h2><span class="n">05</span> Agenten &amp; GO — Dinge erledigen lassen</h2>
+  <p>Deine <b>KI-Crew</b> erkennt, was ansteht, und <b>arbeitet es vor</b>. Gebaut wird aber erst, wenn <b>du GO gibst</b>. Du bleibst immer der Chef — nichts passiert ohne dich.</p>
+  <div class="tip"><span class="b">✓</span><span>Im <b>Postfach</b> tippst du bei einer Karte auf <b>GO ⚡</b> → der Agent erledigt es, der Bericht kommt zurück.</span></div>
+  <div class="tip"><span class="b">✓</span><span>Klick eine Nachricht an, um sie ganz zu lesen — und <b>antworte in eigenen Worten</b>. Deine KI versteht dich und richtet sich danach.</span></div>
+
+  <h2><span class="n">06</span> Das Terminal — Kommandozentrale</h2>
+  <p>Nicht nur für Profis. Du tippst einfach:</p>
+  <div class="kv">
+    <b>Deutsch</b><span>Ganz normal fragen → die KI antwortet direkt (gratis, lokal).</span>
+    <b><code>go &lt;auftrag&gt;</code></b><span>Ein Agent erledigt die Aufgabe und meldet sich im Postfach.</span>
+    <b><code>claude</code></b><span>Startet Claude Code live im Terminal — volle Code-Power.</span>
+    <b><code>?</code></b><span>Zeigt dir alle Befehle.</span>
+  </div>
+  <p class="dim">Und ja — ganz normale Terminal-Befehle (<code>ls</code>, <code>git</code> …) funktionieren auch. Es ist eine echte Shell.</p>
+
+  <h2><span class="n">07</span> Was Francis sehen darf — du entscheidest</h2>
+  <p>Wie bei Apple gibst du <b>gezielt frei</b>, worauf dein System zugreifen darf: Kalender, Standort, Musik. Alles <b>freiwillig</b>, alles bleibt <b>auf deinem Gerät</b>, und du kannst es <b>jederzeit in den Einstellungen abschalten</b>.</p>
+  <p class="dim">Sensibles wie Gesundheitsdaten bleiben strikt lokal — die verlassen dein Gerät nie.</p>
+
+  <h2><span class="n">08</span> Drei Tipps für den Start</h2>
+  <div class="tip"><span class="b">1.</span><span>Sag in der ersten Woche oft <code>merk dir …</code> — je mehr Francis über dich weiß, desto besser wird er.</span></div>
+  <div class="tip"><span class="b">2.</span><span>Nutz das <b>Postfach</b> als deine To-do-Zentrale. Erledigt = weg.</span></div>
+  <div class="tip"><span class="b">3.</span><span>Wünsche &amp; Macken? Der <b>Feedback-Knopf</b> (unten rechts) geht direkt an uns. In der Beta zählt jeder Satz.</span></div>
+
+  <div class="foot">
+    <p>Noch Fragen? Schreib uns: <a href="mailto:info@butterbread-tech.com">info@butterbread-tech.com</a> · <a href="landing/">Dream OS laden</a> · <a href="dream-os-datenschutz.html">Datenschutz</a></p>
+    <p style="margin-top:8px">© 2026 Butterbread Technologies · Dream OS ist eine Beta-Vorschau.</p>
+  </div>
+</div>
+</body>
+</html>
